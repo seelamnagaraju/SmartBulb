@@ -1,13 +1,5 @@
-<<<<<<< HEAD
 # SmartBulb
 Controller  :   TMS320F28069M
-DateCreated :   07/18/2020
+DateCreated :   07/18/2020 : 220200
 
-
-=======
-# SmartBulb
-Controller  :   TMS320F28069M
-DateCreated :   07/18/2020
-
-
->>>>>>> 22ec1064753fbd77de2492a9679c155bf3826276
+Version: V.0.0
