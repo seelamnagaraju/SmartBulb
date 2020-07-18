@@ -1,17 +1,16 @@
 /****************************************************************************************
- * File Name:   F2806x_Temp.h
- * Description: F2806x Device Temperature Definitions
+ * Copyright:  	GoldenMaple Technologies (C) 2016
+ * Project:		EECS X497.34 Course Project
+ * File Name:	F2806x_Temp.h
+ * Description:	F2806x Device Temperature Definitions
  * Language:    TI TMS320F2806x C
- * Author:
- * Created:     07/15/2020
+ * Author:		Louis Zhu
+ * Created:		9/15/2013
  * Notes:
- * Mod History:
- *
- *
- *
+ * Mod History: V1.0: Initial version developed on F28069ControlStick platform
+ * 				V1.1: Modified for LaunchXL-F28069M LaunchPad
  ****************************************************************************************/
 
-/* Define to prevent recursive inclusion -------------------------------------*/
 #ifndef F2806x_TEMP_H
 #define F2806x_TEMP_H
 
@@ -38,8 +37,8 @@
 //Temperature Data Struct
 typedef struct tTempDataStruct
 {
-    Int16 RawData;
-    float DegC;
+	Int16 RawData;
+	float DegC;
 }TempDataStruct;
 
 /*******************************************************************************************
