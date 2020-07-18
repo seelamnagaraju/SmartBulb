@@ -11,6 +11,7 @@
  * 				V1.1: Modified for LaunchXL-F28069M LaunchPad
  ****************************************************************************************/
 
+#include "F2806x_Device.h"
 #include "F2806x_SysCtrl.h"
 #include "F2806x_DevEmu.h"
 

@@ -2,7 +2,7 @@
 <link_info>
    <banner>TMS320C2000 Linker PC v16.9.11.LTS</banner>
    <copyright>Copyright (c) 1996-2017 Texas Instruments Incorporated</copyright>
-   <link_time>0x5f115c07</link_time>
+   <link_time>0x5f11643a</link_time>
    <link_errors>0x0</link_errors>
    <output_file>SmartBulb.out</output_file>
    <entry_point>
