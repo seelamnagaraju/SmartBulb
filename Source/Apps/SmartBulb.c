@@ -31,6 +31,8 @@
 
 /* Global variables -----------------------------------------*/
 volatile int toggleCount = 0;
+char HwVersionNumber[32]="ver: 001_Test";
+char SwVersionNumber[32]="ver: 001_Test";
 
 /* Private variables ----------------------------------------*/
 static Uint16 tempCount;
