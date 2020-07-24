@@ -81,6 +81,7 @@ void main(void)
     InitApp();
 
     // User specific code
+    // variable initialization
     LoopCount = 0;
     ErrorCount = 0;
     cycle = 0;
@@ -94,6 +95,7 @@ void main(void)
         msg = "\r\nEnter Command: \0";
         sciA_TxmtString(msg);
 
+        // Ext Intrpt test code
         //cycle = Get_Xint1Cycle();
         //LED_Ctrl(BLUE_LED, cycle);
         //while(1) {  Delay(1000); } // test
@@ -114,7 +116,7 @@ void main(void)
 /*------------------------------------------------------------*/
 void LED_BlinkRateSet(char iVal)
 {
-    char sysResponce=1, lArr[16]='NULL';
+    char sysResponce=1, lArr[16]=0;
 
     BlinkRate = iVal;
     if (BlinkRate == '+')
