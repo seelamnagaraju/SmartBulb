@@ -132,7 +132,7 @@ void LED_BlinkRateSet(char iVal)
         case 0:
         case 'a':
         {
-            BlinkRate=BlinkRateCnt=0;
+            BlinkRate=BlinkRateCnt=0;          //  LED OFF
             BlinkRate_Hz = 0.00;
             LED_Ctrl(RED_LED, LED_OFF);
             break;
@@ -224,46 +224,34 @@ void InitApp(void)
 /*------------------------------------------------------------*/
 void InitDevice(void)
 {
-      // Step 1. Initialize System Control:
-      // PLL, WatchDog, enable Peripheral Clocks
-      // This example function is found in the F2806x_SysCtrl.c file.
+      // Initialize System Control:
       InitSysCtrl();
 
-      // Step 2. Initalize GPIO:
-      // This example function is found in the F2806x_Gpio.c file and
-      // illustrates how to set the GPIO to its default state.
-      InitGpio(); // Skipped for this example
+      // Initalize GPIO:
+      InitGpio();
       InitXint1();
 
-      // For this example, only init the pins for the SCI-A port.
-      // This function is found in the F2806x_Sci.c file.
+      // Initalize GPIO pins for SCI-A port.
       InitSciaGpio();
 
-      // Step 3. Clear all interrupts and initialize PIE vector table:
-      // Disable CPU interrupts
+      // Clear all interrupts/Disable CPU interrupts initialize PIE vector table:
       DINT;
 
       // Initialize PIE control registers to their default state.
-      // The default state is all PIE interrupts disabled and flags
-      // are cleared.
-      // This function is found in the F2806x_PieCtrl.c file.
       InitPieCtrl();
 
       // Disable CPU interrupts and clear all CPU interrupt flags
       IER = 0x0000;
       IFR = 0x0000;
 
-      // Initialize the PIE vector table with pointers to the shell Interrupt
-      // Service Routines (ISR).
-      // This will populate the entire table, even if the interrupt
-      // is not used in this example.  This is useful for debug purposes.
-      // The shell ISR routines are found in F2806x_DefaultIsr.c.
-      // This function is found in F2806x_PieVect.c.
+      // Initialize the PIE vector table with pointers to the shell Interrupt Service Routines (ISR).
       InitPieVectTable();
 
-      // Step 4. Initialize all the Device Peripherals. :: F2806x_InitPeripherals.c
-      //InitPeripherals(); // Not required for this example
-      InitCpuTimers();   // For this example, only initialize the Cpu Timers
+      // Initialize all the Device Peripherals.
+      //InitPeripherals();
+
+      // Initialize the Cpu Timers
+      InitCpuTimers();
 
       // Configure CPU-Timer 0 to interrupt every 500 milliseconds:
       // 90MHz CPU Freq, 100 millisecond Period (in uSeconds)

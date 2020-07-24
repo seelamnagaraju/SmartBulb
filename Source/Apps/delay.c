@@ -17,9 +17,20 @@ void Delay(unsigned int iCount)
     {
         for (j=0; j<5000; j++) {}
     }
+    //WD_Refresh(); // watchdog refresh
 }
 
-
+/*
+void dly_usec(unsigned int del) // delay_ in micro-seconds
+{
+    volatile int i=0;
+    while(--del)
+    {
+        for(i=0; y<i; i++);
+        //WD_Refresh(); // watchdog refresh
+    }
+}
+ */
 
 //*****************@ End of file @********************************************
 
