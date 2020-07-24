@@ -66,8 +66,8 @@ void LED_BlinkRateSet(char iVal);
 
 
 /* ISR Function Prototypes -----------------------------------*/
-interrupt void XINT1_ISR(void);  // XINT1_ISR - INT1.4
-interrupt void TINT0_ISR(void);
+interrupt void XINT1_ISR(void); // XINT1_ISR - INT1.4
+interrupt void TINT0_ISR(void); // TIMER0_ISR - CPU-Timer0
 interrupt void INT13_ISR(void); // INT13_ISR - INT13 or CPU-Timer1
 interrupt void INT14_ISR(void); // INT14_ISR - INT14 or CPU-Timer2
 
@@ -76,11 +76,9 @@ interrupt void INT14_ISR(void); // INT14_ISR - INT14 or CPU-Timer2
 /*------------------------------------------------------------*/
 void main(void)
 {
-    char *msg;
     InitDevice();
     InitApp();
 
-    // User specific code
     // variable initialization
     LoopCount = 0;
     ErrorCount = 0;
@@ -92,8 +90,7 @@ void main(void)
 
     for(;;)
     {
-        msg = "\r\nEnter Command: \0";
-        sciA_TxmtString(msg);
+        sciA_TxmtString("\r\nEnter Command: \0");
 
         // Ext Intrpt test code
         //cycle = Get_Xint1Cycle();
