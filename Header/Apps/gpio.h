@@ -14,15 +14,9 @@
 #endif
 
 /* Includes ------------------------------------------------------------------*/
-//#include "main.h"
+#include "F2806x_Gpio.h"
 
 /*  -------------------------------------------------------*/
- typedef enum
- {
- 	ON  = 0,
- 	OFF = 1
- } State;
-
 
  typedef enum
  {
@@ -34,10 +28,9 @@
 typedef enum 
 {  
 	RED_LED     = 1,
-	GREEN_LED   = 2,
-	BLUE_LED    = 3,
-	SMART_BULB  = 4,
-	LCD_BCk_LED = 5
+	BLUE_LED    = 2,
+	SMART_BULB  = 3,
+	LCD_BCk_LED = 4
 } LED_TypeDef;
 
 typedef enum
@@ -61,8 +54,7 @@ typedef enum
 } Interrupt_TypeDef;
 
 /* Function prototypes -------------------------------------------------------*/
-void GPIO_Init (void);
-void LED_Ctrl(LED_TypeDef i_LED, State state);
+void LED_Ctrl(LED_TypeDef iLED, eLedState iState);
 
 /*----------------------------------------------------------------------------*/
 #ifdef __cplusplus

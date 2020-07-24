@@ -18,6 +18,7 @@ C_SRCS += \
 ../Source/Apps/sci.c \
 ../Source/Apps/spi.c \
 ../Source/Apps/timer.c \
+../Source/Apps/utils.c \
 ../Source/Apps/watchdog.c 
 
 C_DEPS += \
@@ -33,6 +34,7 @@ C_DEPS += \
 ./Source/Apps/sci.d \
 ./Source/Apps/spi.d \
 ./Source/Apps/timer.d \
+./Source/Apps/utils.d \
 ./Source/Apps/watchdog.d 
 
 OBJS += \
@@ -48,6 +50,7 @@ OBJS += \
 ./Source/Apps/sci.obj \
 ./Source/Apps/spi.obj \
 ./Source/Apps/timer.obj \
+./Source/Apps/utils.obj \
 ./Source/Apps/watchdog.obj 
 
 OBJS__QUOTED += \
@@ -63,6 +66,7 @@ OBJS__QUOTED += \
 "Source\Apps\sci.obj" \
 "Source\Apps\spi.obj" \
 "Source\Apps\timer.obj" \
+"Source\Apps\utils.obj" \
 "Source\Apps\watchdog.obj" 
 
 C_DEPS__QUOTED += \
@@ -78,6 +82,7 @@ C_DEPS__QUOTED += \
 "Source\Apps\sci.d" \
 "Source\Apps\spi.d" \
 "Source\Apps\timer.d" \
+"Source\Apps\utils.d" \
 "Source\Apps\watchdog.d" 
 
 C_SRCS__QUOTED += \
@@ -93,6 +98,7 @@ C_SRCS__QUOTED += \
 "../Source/Apps/sci.c" \
 "../Source/Apps/spi.c" \
 "../Source/Apps/timer.c" \
+"../Source/Apps/utils.c" \
 "../Source/Apps/watchdog.c" 
 
 

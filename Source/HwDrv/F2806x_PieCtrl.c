@@ -1,113 +1,145 @@
-/****************************************************************************************
- * Copyright:  	GoldenMaple Technologies (C) 2016
- * Project:		EECS X497.34 Course Project
- * File Name:	F2806x_PieCtrl.c
- * Description:	F2806x Device PIE Control Driver Functions
- * Language:    TI TMS320F2806x C
- * Author:		Louis Zhu
- * Created:		12/15/2014
- * Notes:
- * Mod History: V1.0: Initial version developed on F28069ControlStick platform
- * 				V1.1: Modified for LaunchXL-F28069M LaunchPad
- ****************************************************************************************/
+//###########################################################################
+//
+// FILE:	F2806x_PieCtrl.c
+//
+// TITLE:	F2806x Device PIE Control Register Initialization Functions.
+//
+//###########################################################################
+// $TI Release: F2806x Support Library v2.05.00.00 $
+// $Release Date: Tue May 26 17:12:03 IST 2020 $
+// $Copyright:
+// Copyright (C) 2009-2020 Texas Instruments Incorporated - http://www.ti.com/
+//
+// Redistribution and use in source and binary forms, with or without 
+// modification, are permitted provided that the following conditions 
+// are met:
+// 
+//   Redistributions of source code must retain the above copyright 
+//   notice, this list of conditions and the following disclaimer.
+// 
+//   Redistributions in binary form must reproduce the above copyright
+//   notice, this list of conditions and the following disclaimer in the 
+//   documentation and/or other materials provided with the   
+//   distribution.
+// 
+//   Neither the name of Texas Instruments Incorporated nor the names of
+//   its contributors may be used to endorse or promote products derived
+//   from this software without specific prior written permission.
+// 
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS 
+// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT 
+// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT 
+// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, 
+// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT 
+// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT 
+// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE 
+// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+// $
+//###########################################################################
 
-#include "F2806x_PieCtrl.h"
-#include "F2806x_PieVect.h"
+//
+// Included Files
+//
+#include "F2806x_Device.h"     // F2806x Headerfile Include File
+#include "F2806x_Examples.h"   // F2806x Examples Include File
 
-/****************************************************
- * #pragma section
- ****************************************************/
-#pragma DATA_SECTION(PieCtrlRegs,"PieCtrlRegsFile");
+extern const struct PIE_VECT_TABLE PieVectTableInit;
 
-/****************************************************
- * variable declaration
- ****************************************************/
-volatile struct PIE_CTRL_REGS PieCtrlRegs;
-
-/**********************************************************************
-* Function: InitPieCtrl()
-*
-* Description: Initializes and enables the PIE interrupts on the F2806x
-**********************************************************************/
-void InitPieCtrl(void)
+//
+// InitPieCtrl - This function initializes the PIE control registers to a known
+// state.
+//
+void
+InitPieCtrl(void)
 {
-	// Disable Interrupts at the CPU level:
-	//DINT;
-	asm(" SETC INTM, DBGM");
+    //
+    // Disable Interrupts at the CPU level
+    //
+    DINT;
 
-	// Disable the PIE
-	PieCtrlRegs.PIECTRL.bit.ENPIE = 0;
+    //
+    // Disable the PIE
+    //
+    PieCtrlRegs.PIECTRL.bit.ENPIE = 0;
 
-//--- Disable all PIE interrupts
-	PieCtrlRegs.PIEIER1.all =  0x0000;
-	PieCtrlRegs.PIEIER2.all =  0x0000;
-	PieCtrlRegs.PIEIER3.all =  0x0000;
-	PieCtrlRegs.PIEIER4.all =  0x0000;
-	PieCtrlRegs.PIEIER5.all =  0x0000;
-	PieCtrlRegs.PIEIER6.all =  0x0000;
-	PieCtrlRegs.PIEIER7.all =  0x0000;
-	PieCtrlRegs.PIEIER8.all =  0x0000;
-	PieCtrlRegs.PIEIER9.all =  0x0000;
-	PieCtrlRegs.PIEIER10.all = 0x0000;
-	PieCtrlRegs.PIEIER11.all = 0x0000;
-	PieCtrlRegs.PIEIER12.all = 0x0000;
+    //
+	// Clear all PIEIER registers
+    //
+	PieCtrlRegs.PIEIER1.all = 0;
+	PieCtrlRegs.PIEIER2.all = 0;
+	PieCtrlRegs.PIEIER3.all = 0;
+	PieCtrlRegs.PIEIER4.all = 0;
+	PieCtrlRegs.PIEIER5.all = 0;
+	PieCtrlRegs.PIEIER6.all = 0;
+	PieCtrlRegs.PIEIER7.all = 0;
+	PieCtrlRegs.PIEIER8.all = 0;
+	PieCtrlRegs.PIEIER9.all = 0;
+	PieCtrlRegs.PIEIER10.all = 0;
+	PieCtrlRegs.PIEIER11.all = 0;
+	PieCtrlRegs.PIEIER12.all = 0;
 
-//--- Clear any potentially pending PIEIFR flags
-	PieCtrlRegs.PIEIFR1.all  = 0x0000;
-	PieCtrlRegs.PIEIFR2.all  = 0x0000;
-	PieCtrlRegs.PIEIFR3.all  = 0x0000;	
-	PieCtrlRegs.PIEIFR4.all  = 0x0000;
-	PieCtrlRegs.PIEIFR5.all  = 0x0000;
-	PieCtrlRegs.PIEIFR6.all  = 0x0000;
-	PieCtrlRegs.PIEIFR7.all  = 0x0000;
-	PieCtrlRegs.PIEIFR8.all  = 0x0000;
-	PieCtrlRegs.PIEIFR9.all  = 0x0000;
-	PieCtrlRegs.PIEIFR10.all = 0x0000;
-	PieCtrlRegs.PIEIFR11.all = 0x0000;
-	PieCtrlRegs.PIEIFR12.all = 0x0000;
-
-	//Clears the Ack bits to enable PIE to drive a pulse into the CPU
-	PieCtrlRegs.PIEACK.all = 0xFFFF;
+    //
+	// Clear all PIEIFR registers
+    //
+	PieCtrlRegs.PIEIFR1.all = 0;
+	PieCtrlRegs.PIEIFR2.all = 0;
+	PieCtrlRegs.PIEIFR3.all = 0;
+	PieCtrlRegs.PIEIFR4.all = 0;
+	PieCtrlRegs.PIEIFR5.all = 0;
+	PieCtrlRegs.PIEIFR6.all = 0;
+	PieCtrlRegs.PIEIFR7.all = 0;
+	PieCtrlRegs.PIEIFR8.all = 0;
+	PieCtrlRegs.PIEIFR9.all = 0;
+	PieCtrlRegs.PIEIFR10.all = 0;
+	PieCtrlRegs.PIEIFR11.all = 0;
+	PieCtrlRegs.PIEIFR12.all = 0;
 }
 
-/*******************************************************************************************
- * Function: EnablePieInterrupts
- *
- * Description: This function enables the PIE module and CPU interrupts
- *
- * Parameters: None
- *
- * Returns: None
- *
- * Special Notes:
- *     1 -
- *
- *******************************************************************************************/
-void EnablePieInterrupts(void)
+//
+// EnableInterrupts - This function enables the PIE module and CPU interrupts
+//
+void
+EnableInterrupts()
 {
-    //Clear the ACK bits to enable PIE to drive a pulse into the CPU
-    PieCtrlRegs.PIEACK.all = 0xFFFF;
+   int16  i;
+   Uint32 *Source = (void *) &PieVectTableInit;
+   Uint32 *Dest = (void *) &PieVectTable;
 
-    //Enable the PIE
+   //
+   // Do not write over first 3 32-bit locations (these locations are
+   // initialized by Boot ROM with boot variables)
+   //
+   Source = Source + 3;
+   Dest = Dest + 3;
+
+   EALLOW;
+   for(i=0; i < 125; i++)
+   {
+       *Dest++ = *Source++;
+   }
+   EDIS;
+
+
+    //
+    // Enable the PIE
+    //
     PieCtrlRegs.PIECTRL.bit.ENPIE = 1;
 
-    //Add code to enable PIE group 1 interrupt 4 (INT1.4) for XINT1
-    PieCtrlRegs.PIEIER1.bit.INTx4 = 1;
-    
-    //Enable ADCINT1 in PIE group 1 to enable ADC interrupt
-    PieCtrlRegs.PIEIER1.bit.INTx1 = 1;
+    //
+	// Enables PIE to drive a pulse into the CPU
+    //
+	PieCtrlRegs.PIEACK.all = 0xFFFF;
 
-
-	//Add code to enable CPU INT1
-    IER |= M_INT1;
-	
-
-	//Add code to enable global Interrupts
+    //
+	// Enable Interrupts at the CPU level
+    //
     EINT;
-	
-
-	// Enable higher priority real-time debug events DBGM
-	ERTM;
 }
 
-//--- end of file -----------------------------------------------------
+//
+// End of file
+//
+

@@ -47,7 +47,7 @@
 extern "C" {
 #endif
 
-#include "F2806x_Device.h"     // F2806x Headerfile Include File
+#include "F2806x_Cla_typedefs.h"
 
 //
 // SCI Individual Register Bit Definitions:
@@ -227,6 +227,15 @@ struct SCI_REGS
 //
 extern volatile struct SCI_REGS SciaRegs;
 extern volatile struct SCI_REGS ScibRegs;
+
+//
+// Function Prototypes
+//
+void SCIa_Init(void);
+void scia_fifo_init(void);
+void scia_xmit(int iData);
+unsigned short scia_recv(void);
+void scia_msg(char * msg);
 
 #ifdef __cplusplus
 }

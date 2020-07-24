@@ -8,9 +8,45 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "sci.h"
+#include "F2806x_Sci.h"
 
-/* SCI pins:
-   - SCIA_TX: P1_29 = GPIO1[29]
-   - SCIA_RX: P1_30 = GPIO1[30]
+/* SCI-A pins:
+ *   - SCI_A-RXD : GPIO28
+ *   - SCI_A-TXD : GPIO29
+ */
+
+void sciA_TxmtByte(unsigned char iData)
+{
+    scia_xmit((int)iData);
+}
+
+void sciA_TxmtString(char * iString)
+{
+    int i;
+    i = 0;
+    while(iString[i] != '\0')
+    {
+        sciA_TxmtByte(iString[i]);
+        i++;
+    }
+}
+
+unsigned char sciA_RecvByte(void)
+{
+    unsigned char l_RecvByte;
+    l_RecvByte = (unsigned char)scia_recv();
+    return l_RecvByte;
+}
+
+/*
+unsigned char * sciA_RecvString(unsigned char iNum)
+{
+    unsigned char * lRecvString;
+    return * lRecvString;
+}
 */
+
+
+//*****************@ End of file @********************************************
+
 

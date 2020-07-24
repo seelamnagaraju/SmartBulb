@@ -1,18 +1,5 @@
 # SmartBulb
 Controller  :   TMS320F28069M
-DateCreated :   07/18/2020 : 220200
-
-Version: V.0.0.1
-
-// "ver: 001"; //Released on 07-18-2020
-// created the project and source files to the project
-// Bug: Problem: sci driver baud rate
-// solution:sci.c : Need to develop
-// status : under development
-// Drivers development and integration under progress
-
-// "ver: 001"; //Release on 07-20-2020
-// bug identified in delay.c, used increment mechanism for delay
-// this was resolved and released in the same version, ver: 001
+DateCreated :   07/18/2020
 
 

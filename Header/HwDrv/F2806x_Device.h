@@ -100,9 +100,6 @@ extern "C" {
 #define   DSP28_28069PZ	   0
 #define   DSP28_28069UPZ   TARGET
 
-#define  Device_cal (void (*)(void))0x3D7C80
-
-
 //
 // Common CPU Definitions:
 //
@@ -202,28 +199,28 @@ typedef char            Int8;
 // Include All Peripheral Header Files:
 //
 #include "F2806x_Adc.h"                // ADC Registers
-//#include "F2806x_BootVars.h"		   // Boot ROM Variables
-//#include "F2806x_Cla.h"                // Control Law Accelerator Registers
-//#include "F2806x_Comp.h"               // Comparator Registers
+#include "F2806x_BootVars.h"		   // Boot ROM Variables
+#include "F2806x_Cla.h"                // Control Law Accelerator Registers
+#include "F2806x_Comp.h"               // Comparator Registers
 #include "F2806x_CpuTimers.h"          // 32-bit CPU Timers
 #include "F2806x_DevEmu.h"             // Device Emulation Registers
-//#include "F2806x_Dma.h"				   // Direct Memory Access Registers
-//#include "F2806x_ECan.h"               // Enhanced CAN Registers
-//#include "F2806x_ECap.h"               // Enhanced Capture
-//#include "F2806x_EPwm.h"               // Enhanced PWM
-//#include "F2806x_EQep.h"               // Enhanced QEP
+#include "F2806x_Dma.h"				   // Direct Memory Access Registers
+#include "F2806x_ECan.h"               // Enhanced CAN Registers
+#include "F2806x_ECap.h"               // Enhanced Capture
+#include "F2806x_EPwm.h"               // Enhanced PWM
+#include "F2806x_EQep.h"               // Enhanced QEP
 #include "F2806x_Gpio.h"               // General Purpose I/O Registers
-//#include "F2806x_HRCap.h"			   // High Resolution Capture Registers
-//#include "F2806x_I2c.h"                // I2C Registers
-//#include "F2806x_Mcbsp.h"			   // McBSP Registers
-//#include "F2806x_NmiIntrupt.h"         // NMI Interrupt Registers
+#include "F2806x_HRCap.h"			   // High Resolution Capture Registers
+#include "F2806x_I2c.h"                // I2C Registers
+#include "F2806x_Mcbsp.h"			   // McBSP Registers
+#include "F2806x_NmiIntrupt.h"         // NMI Interrupt Registers
 #include "F2806x_PieCtrl.h"            // PIE Control Registers
 #include "F2806x_PieVect.h"            // PIE Vector Table
 #include "F2806x_Spi.h"                // SPI Registers
 #include "F2806x_Sci.h"                // SCI Registers
 #include "F2806x_SysCtrl.h"            // System Control/Power Modes
-//#include "F2806x_Usb.h"				   // USB Registers
-//#include "F2806x_XIntrupt.h"           // External Interrupts
+#include "F2806x_Usb.h"				   // USB Registers
+#include "F2806x_XIntrupt.h"           // External Interrupts
 
 #if (DSP28_PLC83PNT || DSP28_PLC93PNT)
 

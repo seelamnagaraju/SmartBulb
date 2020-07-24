@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-	<name>SmartBulb</name>
+	<name>Smart_Bulb</name>
 	<comment></comment>
 	<projects>
 	</projects>
@@ -18,10 +18,43 @@
 		</buildCommand>
 	</buildSpec>
 	<natures>
-		<nature>com.ti.ccstudio.core.ccsNature</nature>
 		<nature>org.eclipse.cdt.core.cnature</nature>
-		<nature>org.eclipse.cdt.managedbuilder.core.managedBuildNature</nature>
 		<nature>org.eclipse.cdt.core.ccnature</nature>
+		<nature>org.eclipse.cdt.managedbuilder.core.managedBuildNature</nature>
+		<nature>com.ti.ccstudio.core.ccsNature</nature>
 		<nature>org.eclipse.cdt.managedbuilder.core.ScannerConfigNature</nature>
 	</natures>
+	<linkedResources>
+		<link>
+			<name>F2806x_Headers_nonBIOS.cmd</name>
+			<type>1</type>
+			<locationURI>INSTALLROOT_F2806x/headers/cmd/F2806x_Headers_nonBIOS.cmd</locationURI>
+		</link>
+	</linkedResources>
+	<variableList>
+		<variable>
+			<name>INSTALLROOT_F2806x</name>
+			<value>$%7BPARENT-3-ORIGINAL_PROJECT_ROOT%7D</value>
+		</variable>
+		<variable>
+			<name>INSTALLROOT_F2806x_TO_MWARE</name>
+			<value>$%7BPARENT-3-ORIGINAL_PROJECT_ROOT%7D/MWare</value>
+		</variable>
+		<variable>
+			<name>INSTALLROOT_FASTRTS</name>
+			<value>$%7BPARENT-5-ORIGINAL_PROJECT_ROOT%7D/libraries/math/FPUfastRTS/c28</value>
+		</variable>
+		<variable>
+			<name>INSTALLROOT_HCCAL</name>
+			<value>$%7BPARENT-5-ORIGINAL_PROJECT_ROOT%7D/libraries/calibration/hrcap</value>
+		</variable>
+		<variable>
+			<name>INSTALLROOT_IQMATH</name>
+			<value>$%7BPARENT-5-ORIGINAL_PROJECT_ROOT%7D/libraries/math/IQmath/c28</value>
+		</variable>
+		<variable>
+			<name>ORIGINAL_PROJECT_ROOT</name>
+			<value>file:/C:/ti/c2000/C2000Ware_3_02_00_00/device_support/f2806x/examples/c28/sci_echoback</value>
+		</variable>
+	</variableList>
 </projectDescription>

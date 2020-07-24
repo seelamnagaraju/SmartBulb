@@ -12,8 +12,9 @@
  ****************************************************************************************/
 
 #include "F2806x_Gpio.h"
-#include "F2806x_Xint1.h"
+#include "F2806x_XIntrupt.h"
 #include "F2806x_PieCtrl.h"
+#include "F2806x_Device.h"
 
 /****************************************************
  * #pragma section
@@ -24,7 +25,8 @@
 /****************************************************
  * variable declaration
  ****************************************************/
-volatile struct XINTRUPT_REGS XIntruptRegs;
+extern volatile struct XINTRUPT_REGS XIntruptRegs;
+
 volatile Uint16 xint1Counter;	//this variable records latency counts from interrupt event to ISR
 volatile Uint16 xint1Cycle;		//this variable cycles every 3 counts
 
@@ -53,53 +55,29 @@ void InitXint1(void)
 	XIntruptRegs.XINT1CR.bit.ENABLE = 1;
 
 	xint1Cycle = 0;
+	xint1Counter = 0;
 }
 
 /*******************************************************************************************
  * Function: Xint1_ISR
- *
- * Description: This function services XINT1 interrupt
- *
- * Parameters: None
- *
- * Returns: None
- *
- * Special Notes:
- *
+ * ReDirected to F2806x_DefaultIsr.c File
  *******************************************************************************************/
+/*
 interrupt void Xint1_ISR(void)
 {
 	xint1Counter = XIntruptRegs.XINT1CTR;	//capture the count
-
-	if (++xint1Cycle >= XINT1_CYCLE)
+	if (++xint1Cycle >= 3)  // XINT1_CYCLE=3
 	{
 		xint1Cycle = 0;
 	}
-
 	// Acknowledge this interrupt to service next interrupt from group 1
 	// Must use the mask value, don't use bit value b/c of read-modify-write effect
 	PieCtrlRegs.PIEACK.all = PIEACK_GROUP1;
-
 
 #ifdef _DEBUG
     asm (" ESTOP0");                        // Emulator Halt instruction for debug only
 #endif
 }
+*/
 
-/*******************************************************************************************
- * Function: GetXint1Cycle
- *
- * Description: This function returns XINT1 interrupt count cycle
- *
- * Parameters: None
- *
- * Returns: Uint16
- *
- * Special Notes:
- *
- *******************************************************************************************/
-Uint16 GetXint1Cycle(void)
-{
-	return xint1Cycle;
-}
 //--- end of file -----------------------------------------------------

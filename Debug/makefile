@@ -10,6 +10,8 @@ GEN_OPTS__FLAG :=
 GEN_CMDS__FLAG := 
 
 ORDERED_OBJS += \
+-lrts2800_fpu32_fast_supplement.lib \
+-lrts2800_fpu32.lib \
 "./Source/Apps/SmartBulb.obj" \
 "./Source/Apps/TempMonitor.obj" \
 "./Source/Apps/adc.obj" \
@@ -22,21 +24,26 @@ ORDERED_OBJS += \
 "./Source/Apps/sci.obj" \
 "./Source/Apps/spi.obj" \
 "./Source/Apps/timer.obj" \
+"./Source/Apps/utils.obj" \
 "./Source/Apps/watchdog.obj" \
 "./Source/HwDrv/F2806x_Adc.obj" \
-"./Source/HwDrv/F2806x_DelayUs.obj" \
+"./Source/HwDrv/F2806x_CodeStartBranch.obj" \
+"./Source/HwDrv/F2806x_CpuTimers.obj" \
+"./Source/HwDrv/F2806x_DefaultIsr.obj" \
+"./Source/HwDrv/F2806x_Dma.obj" \
+"./Source/HwDrv/F2806x_GlobalVariableDefs.obj" \
 "./Source/HwDrv/F2806x_Gpio.obj" \
+"./Source/HwDrv/F2806x_I2C.obj" \
 "./Source/HwDrv/F2806x_PieCtrl.obj" \
 "./Source/HwDrv/F2806x_PieVect.obj" \
 "./Source/HwDrv/F2806x_Sci.obj" \
-"./Source/HwDrv/F2806x_Startup.obj" \
 "./Source/HwDrv/F2806x_SysCtrl.obj" \
 "./Source/HwDrv/F2806x_Xint1.obj" \
-"./Source/HwDrv/LedDrv.obj" \
+"./Source/HwDrv/F2806x_usDelay.obj" \
 "../F2806x-LaunchPad-RAM.cmd" \
-"../F2806x_Headers_nonBIOS.cmd" \
+"C:/ti/c2000/C2000Ware_3_02_00_00/device_support/f2806x/headers/cmd/F2806x_Headers_nonBIOS.cmd" \
 $(GEN_CMDS__FLAG) \
--llibc.a \
+-lIQmath_fpu32.lib \
 
 -include ../makefile.init
 
@@ -147,43 +154,42 @@ endif
 
 # Add inputs and outputs from these tool invocations to the build variables 
 EXE_OUTPUTS += \
-SmartBulb.out \
+Example_2806xSci_Echoback.out \
 
 EXE_OUTPUTS__QUOTED += \
-"SmartBulb.out" \
+"Example_2806xSci_Echoback.out" \
 
 BIN_OUTPUTS += \
-SmartBulb.hex \
+Example_2806xSci_Echoback.hex \
 
 BIN_OUTPUTS__QUOTED += \
-"SmartBulb.hex" \
+"Example_2806xSci_Echoback.hex" \
 
 
 # All Target
-all: $(OBJS) $(CMD_SRCS) $(GEN_CMDS)
-	@$(MAKE) --no-print-directory -Onone "SmartBulb.out"
+all: Example_2806xSci_Echoback.out
 
 # Tool invocations
-SmartBulb.out: $(OBJS) $(CMD_SRCS) $(GEN_CMDS)
+Example_2806xSci_Echoback.out: $(OBJS) $(CMD_SRCS) $(GEN_CMDS)
 	@echo 'Building target: "$@"'
 	@echo 'Invoking: C2000 Linker'
-	"C:/ti/ccsv7/tools/compiler/ti-cgt-c2000_16.9.11.LTS/bin/cl2000" -v28 -ml -mt --cla_support=cla0 --float_support=fpu32 --vcu_support=vcu0 -g --diag_warning=225 --diag_wrap=off --display_error_number -z -m"SmartBulb.map" --stack_size=0x300 --warn_sections -i"C:/ti/ccsv7/tools/compiler/ti-cgt-c2000_16.9.11.LTS/lib" -i"C:/ti/ccsv7/tools/compiler/ti-cgt-c2000_16.9.11.LTS/include" --reread_libs --diag_wrap=off --display_error_number --xml_link_info="SmartBulb_linkInfo.xml" --rom_model -o "SmartBulb.out" $(ORDERED_OBJS)
+	"C:/ti/ccsv7/tools/compiler/ti-cgt-c2000_16.9.11.LTS/bin/cl2000" -v28 -ml -mt --cla_support=cla0 --float_support=fpu32 --vcu_support=vcu0 --define="_DEBUG" --define="LARGE_MODEL" -g --diag_suppress=10063 --diag_warning=225 --issue_remarks --verbose_diagnostics --quiet -z -m"Example_2806xSci_Echoback.map" --stack_size=0x200 --warn_sections -i"C:/ti/ccsv7/tools/compiler/ti-cgt-c2000_16.9.11.LTS/lib" -i"C:/ti/ccsv7/tools/compiler/ti-cgt-c2000_16.9.11.LTS/include" -i"C:/ti/c2000/C2000Ware_3_02_00_00/device_support/f2806x/common/lib" -i"C:/ti/c2000/C2000Ware_3_02_00_00/libraries/math/IQmath/c28/lib" -i"C:/ti/c2000/C2000Ware_3_02_00_00/libraries/math/FPUfastRTS/c28/lib" --priority --reread_libs --issue_remarks --verbose_diagnostics --xml_link_info="Example_2806xSci_Echoback_linkInfo.xml" --entry_point=code_start --rom_model -o "Example_2806xSci_Echoback.out" $(ORDERED_OBJS)
 	@echo 'Finished building target: "$@"'
 	@echo ' '
 
-SmartBulb.hex: $(EXE_OUTPUTS)
+Example_2806xSci_Echoback.hex: $(EXE_OUTPUTS)
 	@echo 'Building files: $(strip $(EXE_OUTPUTS__QUOTED))'
 	@echo 'Invoking: C2000 Hex Utility'
-	"C:/ti/ccsv7/tools/compiler/ti-cgt-c2000_16.9.11.LTS/bin/hex2000"  -o "SmartBulb.hex" $(EXE_OUTPUTS__QUOTED)
+	"C:/ti/ccsv7/tools/compiler/ti-cgt-c2000_16.9.11.LTS/bin/hex2000"  -o "Example_2806xSci_Echoback.hex" $(EXE_OUTPUTS__QUOTED)
 	@echo 'Finished building: $(strip $(EXE_OUTPUTS__QUOTED))'
 	@echo ' '
 
 # Other Targets
 clean:
 	-$(RM) $(BIN_OUTPUTS__QUOTED)$(EXE_OUTPUTS__QUOTED)
-	-$(RM) "Source\Apps\SmartBulb.obj" "Source\Apps\TempMonitor.obj" "Source\Apps\adc.obj" "Source\Apps\dac.obj" "Source\Apps\delay.obj" "Source\Apps\dma.obj" "Source\Apps\gpio.obj" "Source\Apps\i2c.obj" "Source\Apps\pwm.obj" "Source\Apps\sci.obj" "Source\Apps\spi.obj" "Source\Apps\timer.obj" "Source\Apps\watchdog.obj" "Source\HwDrv\F2806x_Adc.obj" "Source\HwDrv\F2806x_DelayUs.obj" "Source\HwDrv\F2806x_Gpio.obj" "Source\HwDrv\F2806x_PieCtrl.obj" "Source\HwDrv\F2806x_PieVect.obj" "Source\HwDrv\F2806x_Sci.obj" "Source\HwDrv\F2806x_Startup.obj" "Source\HwDrv\F2806x_SysCtrl.obj" "Source\HwDrv\F2806x_Xint1.obj" "Source\HwDrv\LedDrv.obj" 
-	-$(RM) "Source\Apps\SmartBulb.d" "Source\Apps\TempMonitor.d" "Source\Apps\adc.d" "Source\Apps\dac.d" "Source\Apps\delay.d" "Source\Apps\dma.d" "Source\Apps\gpio.d" "Source\Apps\i2c.d" "Source\Apps\pwm.d" "Source\Apps\sci.d" "Source\Apps\spi.d" "Source\Apps\timer.d" "Source\Apps\watchdog.d" "Source\HwDrv\F2806x_Adc.d" "Source\HwDrv\F2806x_Gpio.d" "Source\HwDrv\F2806x_PieCtrl.d" "Source\HwDrv\F2806x_PieVect.d" "Source\HwDrv\F2806x_Sci.d" "Source\HwDrv\F2806x_SysCtrl.d" "Source\HwDrv\F2806x_Xint1.d" "Source\HwDrv\LedDrv.d" 
-	-$(RM) "Source\HwDrv\F2806x_DelayUs.d" "Source\HwDrv\F2806x_Startup.d" 
+	-$(RM) "Source\Apps\SmartBulb.obj" "Source\Apps\TempMonitor.obj" "Source\Apps\adc.obj" "Source\Apps\dac.obj" "Source\Apps\delay.obj" "Source\Apps\dma.obj" "Source\Apps\gpio.obj" "Source\Apps\i2c.obj" "Source\Apps\pwm.obj" "Source\Apps\sci.obj" "Source\Apps\spi.obj" "Source\Apps\timer.obj" "Source\Apps\utils.obj" "Source\Apps\watchdog.obj" "Source\HwDrv\F2806x_Adc.obj" "Source\HwDrv\F2806x_CodeStartBranch.obj" "Source\HwDrv\F2806x_CpuTimers.obj" "Source\HwDrv\F2806x_DefaultIsr.obj" "Source\HwDrv\F2806x_Dma.obj" "Source\HwDrv\F2806x_GlobalVariableDefs.obj" "Source\HwDrv\F2806x_Gpio.obj" "Source\HwDrv\F2806x_I2C.obj" "Source\HwDrv\F2806x_PieCtrl.obj" "Source\HwDrv\F2806x_PieVect.obj" "Source\HwDrv\F2806x_Sci.obj" "Source\HwDrv\F2806x_SysCtrl.obj" "Source\HwDrv\F2806x_Xint1.obj" "Source\HwDrv\F2806x_usDelay.obj" 
+	-$(RM) "Source\Apps\SmartBulb.d" "Source\Apps\TempMonitor.d" "Source\Apps\adc.d" "Source\Apps\dac.d" "Source\Apps\delay.d" "Source\Apps\dma.d" "Source\Apps\gpio.d" "Source\Apps\i2c.d" "Source\Apps\pwm.d" "Source\Apps\sci.d" "Source\Apps\spi.d" "Source\Apps\timer.d" "Source\Apps\utils.d" "Source\Apps\watchdog.d" "Source\HwDrv\F2806x_Adc.d" "Source\HwDrv\F2806x_CpuTimers.d" "Source\HwDrv\F2806x_DefaultIsr.d" "Source\HwDrv\F2806x_Dma.d" "Source\HwDrv\F2806x_GlobalVariableDefs.d" "Source\HwDrv\F2806x_Gpio.d" "Source\HwDrv\F2806x_I2C.d" "Source\HwDrv\F2806x_PieCtrl.d" "Source\HwDrv\F2806x_PieVect.d" "Source\HwDrv\F2806x_Sci.d" "Source\HwDrv\F2806x_SysCtrl.d" "Source\HwDrv\F2806x_Xint1.d" 
+	-$(RM) "Source\HwDrv\F2806x_CodeStartBranch.d" "Source\HwDrv\F2806x_usDelay.d" 
 	-@echo 'Finished clean'
 	-@echo ' '
 

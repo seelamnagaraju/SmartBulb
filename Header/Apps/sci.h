@@ -17,9 +17,10 @@
 //#include "main.h"
 
 /* Function prototypes -------------------------------------------------------*/
-void SCIa_Init (void);
-unsigned char SCIa_read (void);
-unsigned char SCIa_write (unsigned char iData);
+void sciA_TxmtByte(unsigned char iData);
+unsigned char sciA_RecvByte(void);
+void sciA_TxmtString(char * iString);
+unsigned char * sciA_RecvString(unsigned char iNum);
 
 /*----------------------------------------------------------------------------*/
 #ifdef __cplusplus

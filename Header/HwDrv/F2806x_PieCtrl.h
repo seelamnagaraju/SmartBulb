@@ -1,50 +1,69 @@
-/****************************************************************************************
- * Copyright:  	GoldenMaple Technologies (C) 2014
- * Project:		EECS X497.32 Course Project
- * File Name:	F2806x_Pie_ctrl.h
- * Description:	F2806x Device PIE_CTRL Register Definitions
- * Language:    TI TMS320F2806x C
- * Author:		Louis Zhu
- * Created:		12/15/2014
- * Notes:
- * Mod History: V1.0: Initial version
- ****************************************************************************************/
+//###########################################################################
+//
+// FILE:   F2806x_Pie_ctrl.h
+//
+// TITLE:  F2806x Device PIE_CTRL Register Definitions.
+//
+//###########################################################################
+// $TI Release: F2806x Support Library v2.05.00.00 $   
+// $Release Date: Tue May 26 17:12:03 IST 2020 $   
+// $Copyright:
+// Copyright (C) 2009-2020 Texas Instruments Incorporated - http://www.ti.com/
+//
+// Redistribution and use in source and binary forms, with or without 
+// modification, are permitted provided that the following conditions 
+// are met:
+// 
+//   Redistributions of source code must retain the above copyright 
+//   notice, this list of conditions and the following disclaimer.
+// 
+//   Redistributions in binary form must reproduce the above copyright
+//   notice, this list of conditions and the following disclaimer in the 
+//   documentation and/or other materials provided with the   
+//   distribution.
+// 
+//   Neither the name of Texas Instruments Incorporated nor the names of
+//   its contributors may be used to endorse or promote products derived
+//   from this software without specific prior written permission.
+// 
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS 
+// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT 
+// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT 
+// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, 
+// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT 
+// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT 
+// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE 
+// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+// $
+//###########################################################################
+
 #ifndef F2806x_PIE_CTRL_H
 #define F2806x_PIE_CTRL_H
 
-#include "F2806x_Device.h"
+#ifdef __cplusplus
+extern "C" {
+#endif
 
-#define M_INT1  0x0001
-#define M_INT2  0x0002
-#define M_INT3  0x0004
-#define M_INT4  0x0008
-#define M_INT5  0x0010
-#define M_INT6  0x0020
-#define M_INT7  0x0040
-#define M_INT8  0x0080
-#define M_INT9  0x0100
-#define M_INT10 0x0200
-#define M_INT11 0x0400
-#define M_INT12 0x0800
-#define M_INT13 0x1000
-#define M_INT14 0x2000
-#define M_DLOG  0x4000
-#define M_RTOS  0x8000
-
-//---------------------------------------------------------------------------
+//
 // PIE_CTRL Individual Register Bit Definitions:
-
-struct PIECTRL_BITS {     // bits description
+//
+struct PIECTRL_BITS
+{
 	Uint16	ENPIE:1;			// 0	Enable PIE Block
 	Uint16	PIEVECT:15;			// 15:1	Fetched Vector Address
 };
 
-union PIECTRL_REG {
+union PIECTRL_REG
+{
 	Uint16 all;
 	struct PIECTRL_BITS	bit;
 };
 
-struct PIEIER_BITS {     // bits description
+struct PIEIER_BITS
+{
 	Uint16	INTx1:1;			// 0	INTx1
 	Uint16	INTx2:1;			// 1	INTx2
 	Uint16	INTx3:1;			// 2	INTx3
@@ -56,12 +75,14 @@ struct PIEIER_BITS {     // bits description
 	Uint16	rsvd1:8;			// 15:8	Reserved
 };
 
-union PIEIER_REG {
+union PIEIER_REG
+{
 	Uint16 all;
 	struct PIEIER_BITS	bit;
 };
 
-struct PIEIFR_BITS {     // bits description
+struct PIEIFR_BITS
+{
 	Uint16	INTx1:1;			// 0	INTx1
 	Uint16	INTx2:1;			// 1	INTx2
 	Uint16	INTx3:1;			// 2	INTx3
@@ -73,12 +94,14 @@ struct PIEIFR_BITS {     // bits description
 	Uint16	rsvd1:8;			// 15:8	Reserved
 };
 
-union PIEIFR_REG {
+union PIEIFR_REG
+{
 	Uint16 all;
 	struct PIEIFR_BITS	bit;
 };
 
-struct PIEACK_BITS {     // bits description
+struct PIEACK_BITS
+{
 	Uint16	ACK1:1;			// 0	Acknowledge PIE Interrupt Group 1
 	Uint16	ACK2:1;			// 1	Acknowledge PIE Interrupt Group 2
 	Uint16	ACK3:1;			// 2	Acknowledge PIE Interrupt Group 3
@@ -94,12 +117,14 @@ struct PIEACK_BITS {     // bits description
 	Uint16	rsvd1:4;		// 15:12	Reserved
 };
 
-union PIEACK_REG {
+union PIEACK_REG
+{
 	Uint16 all;
 	struct PIEACK_BITS	bit;
 };
 
-struct PIE_CTRL_REGS {
+struct PIE_CTRL_REGS
+{
 	union	PIECTRL_REG	PIECTRL;	// PIE Control Register
 	union	PIEACK_REG	PIEACK;		// PIE Acknowledge Register
 	union	PIEIER_REG	PIEIER1;	// PIE INT1 IER Register
@@ -128,6 +153,9 @@ struct PIE_CTRL_REGS {
 	union	PIEIFR_REG	PIEIFR12;	// PIE INT12 IFR Register
 };
 
+//
+// Defines
+//
 #define PIEACK_GROUP1   0x0001
 #define PIEACK_GROUP2   0x0002
 #define PIEACK_GROUP3   0x0004
@@ -141,15 +169,19 @@ struct PIE_CTRL_REGS {
 #define PIEACK_GROUP11  0x0400
 #define PIEACK_GROUP12  0x0800
 
+//
+// Pie_ctrl External References & Function Declarations:
+//
 extern volatile struct PIE_CTRL_REGS PieCtrlRegs;
 
-/*******************************************************************************************
- Public Function Prototypes
- *******************************************************************************************/
-void InitPieCtrl(void);
-void EnablePieInterrupts();
+#ifdef __cplusplus
+}
+#endif /* extern "C" */
+
 
 #endif  // end of F2806x_PIE_CTRL_H definition
-//===========================================================================
-// End of file.
-//===========================================================================
+
+//
+// End of file
+//
+

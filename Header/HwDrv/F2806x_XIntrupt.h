@@ -79,7 +79,20 @@ struct XINTRUPT_REGS
 //
 // External Interrupt References & Function Declarations:
 //
-extern volatile struct XINTRUPT_REGS XIntruptRegs;
+//extern volatile struct XINTRUPT_REGS XIntruptRegs;
+
+//XINT edge enum
+enum tXintEdgeTypeEnum
+{
+    XINT_FALLING_EDGE = 0,  //falling edge type
+    XINT_RISING_EDGE        //rising edge type
+};
+
+//---------------------------------------------------------------------------
+// Global Function References
+//
+void InitXint1(void);
+
 
 #ifdef __cplusplus
 }

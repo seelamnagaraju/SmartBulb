@@ -12,22 +12,14 @@
 void Delay(unsigned int iCount)
 {
     volatile int i=0;
-    while (--iCount)
+    volatile int j=0;
+    for (i=0; i<iCount; i++)
     {
-        for (i=0; i<5000; i++) {}
+        for (j=0; j<5000; j++) {}
     }
 }
 
-/*
-void Delay_usec(unsigned int iDel) // delay_ in micro-seconds
-{
-    volatile char y=0;
-    while(--iDel)
-    {
-        for(y=0; y<5; y++);
-    }
-}
-*/
 
 
+//*****************@ End of file @********************************************
 

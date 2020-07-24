@@ -16,45 +16,30 @@
 */
 
 /*-----------------------------------------------------------*/
-/*-----------------------------------------------------------*/
-void GPIO_Init(void)
-{
-	
-}
-
-/*-----------------------------------------------------------*/
 /* Sets the state of a board LEDs to on or off */
 /*-----------------------------------------------------------*/
-void LED_Ctrl(LED_TypeDef LED, State state)
+void LED_Ctrl(LED_TypeDef iLED, eLedState iState)
 {
-	switch (LED)
+	switch (iLED)
 	{
 		case 1:
 		{
-			//if(state) 	RED_LED_OFF
-			//else		RED_LED_ON
-			break;
+		    LedRedCtrl(iState);
+		    break;
 		}
 		case 2:
 		{
-			//if(state) 	GREEN_LED_OFF
-			//else		GREEN_LED_ON
-			break;
-		}
-		case 3:
-		{
-			//if(state) 	BLUE_LED_OFF
-			//else		BLUE_LED_ON
-			break;
+		    LedBlueCtrl(iState);
+            break;
 		}
 
-		case 4:
+		case 3:
 		{
-			//if(state) 	SMART_BULB_OFF
-			//else		SMART_BULB_ON
+			//if(iState) 	SMART_BULB_OFF
+			//else	    	SMART_BULB_ON
 			break;
 		}
-		case 5:
+		case 4:
 		{
 			break;
 		}
@@ -63,3 +48,5 @@ void LED_Ctrl(LED_TypeDef LED, State state)
 	}
 }
 
+
+//*****************@ End of file @********************************************
