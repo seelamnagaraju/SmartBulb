@@ -7,8 +7,6 @@
  * Notes:
  * Mod History:
  *
- *
- *
  ****************************************************************************************/
 
 /* Define to prevent recursive inclusion -------------------------------------*/
@@ -38,7 +36,7 @@
 //Temperature Data Struct
 typedef struct tTempDataStruct
 {
-    Int16 RawData;
+    unsigned short RawData;
     float DegC;
 }TempDataStruct;
 

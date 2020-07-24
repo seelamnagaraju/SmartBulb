@@ -1,22 +1,30 @@
-//###########################################################################
+/**
+  * @}
+  */
+/************************ prologue *****************************************/
 //
-// FILE:   SmartBulb.c
-//
-// TITLE:  SCI Echo Back Example
+//!    FILE:   SmartBulb.c
 //!
-//!  This test receives and echo-backs data through the SCI-A port.
+//!    TITLE:  Smart Bulb Project
 //!
+//!    Author: Nagaraju   &   HARAN
+//!
+//!    Assignment : SMART BULB CTRL PRIJECT
+//!
+//!    Date: 07/18/2020
+//!
+//!    Objective:  Smart bulb controlling system
 //
-//###########################################################################
+/***************************************************************************/
+/**
+  * @}
+  */
 //
-// Included Files
-//
-#include <math.h>
-#include "DSP28x_Project.h"     // Device Headerfile and Examples Include File
-#include "Delay.h"
-#include "gpio.h"
-#include "sci.h"
-#include "utils.h"
+/* Includes ---------------------------------------------------*/
+#include "main.h"
+
+/* Private define ---------------------------------------------*/
+#define MAX_ADC_VALUE 4095 //max ADC value used in time delay
 
 #define PERIOD_1SEC   1000000   //   1 second
 #define PERIOD_2SEC   2000000   //   2 second
@@ -28,9 +36,18 @@
 #define PERIOD_2SEC   2000000   //   2 second
 #define PERIOD_15SEC  1500000   // 1.5 second
 #define PERIOD_05SEC  500000    //  .5 second
-#define PERIOD_025HZ 250000    //  .25 second
+#define PERIOD_025HZ 250000     //  .25 second
 
-// Globals Variables
+/* Private typedef --------------------------------------------*/
+
+
+/* Global variables -------------------------------------------*/
+volatile int toggleCount = 0;
+char HwVersionNumber[32]="ver: 001_Test";
+char SwVersionNumber[32]="ver: 001_Test";
+
+/* Private variables ------------------------------------------*/
+static Uint16 tempCount;
 Uint16 LoopCount;
 Uint16 ErrorCount;
 char BlinkRate, BlinkRateCnt;
@@ -41,39 +58,35 @@ extern volatile struct XINTRUPT_REGS XIntruptRegs;
 extern volatile Uint16 xint1Counter;   //this variable records latency counts from interrupt event to ISR
 extern volatile Uint16 xint1Cycle;     //this variable cycles every 3 counts
 
-// Function Prototypes statements for functions found within this file.
-interrupt void XINT1_ISR(void);  // XINT1_ISR - INT1.4
-interrupt void TINT0_ISR(void);
-interrupt void INT13_ISR(void); // INT13_ISR - INT13 or CPU-Timer1
-interrupt void INT14_ISR(void); // INT14_ISR - INT14 or CPU-Timer2
-
+/* Private Functions ------------------------------------------*/
 void InitDevice(void);
 void InitApp(void);
 Uint16 Get_Xint1Cycle(void);
 void LED_BlinkRateSet(char iVal);
 
 
-//***************** Main ********************************************
+/* ISR Function Prototypes -----------------------------------*/
+interrupt void XINT1_ISR(void);  // XINT1_ISR - INT1.4
+interrupt void TINT0_ISR(void);
+interrupt void INT13_ISR(void); // INT13_ISR - INT13 or CPU-Timer1
+interrupt void INT14_ISR(void); // INT14_ISR - INT14 or CPU-Timer2
+
+
+/*------------------------------------------------------------*/
+/*------------------------------------------------------------*/
 void main(void)
 {
     char *msg;
-
     InitDevice();
     InitApp();
 
-//  for(;;); // for testing
-
-    // Step 5. User specific code
+    // User specific code
     LoopCount = 0;
     ErrorCount = 0;
     cycle = 0;
     BlinkRate=0;
     BlinkRateCnt=0;
     BlinkRate_Hz=0;
-
-    char pBuffer1="test1";
-    char pBuffer2="test2";
-    cycle=s_strncmp(pBuffer1, pBuffer2, 4);
 
     sciA_TxmtString("\r\n\n\nHello World!\0");
     sciA_TxmtString("\r\nYou will enter a character, and the DSP will echo it back! \n\0");
