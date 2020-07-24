@@ -9,7 +9,7 @@
 //!
 //!    Author: Nagaraju   &   HARAN
 //!
-//!    Assignment : SMART BULB CTRL PRIJECT
+//!    Assignment : SMART BULB CTRL PROJECT
 //!
 //!    Date: 07/18/2020
 //!
@@ -36,7 +36,7 @@
 #define PERIOD_2SEC   2000000   //   2 second
 #define PERIOD_15SEC  1500000   // 1.5 second
 #define PERIOD_05SEC  500000    //  .5 second
-#define PERIOD_025HZ 250000     //  .25 second
+#define PERIOD_025HZ  250000     // .25 second
 
 /* Private typedef --------------------------------------------*/
 
@@ -88,44 +88,24 @@ void main(void)
     BlinkRateCnt=0;
     BlinkRate_Hz=0;
 
-    sciA_TxmtString("\r\n\n\nHello World!\0");
-    sciA_TxmtString("\r\nYou will enter a character, and the DSP will echo it back! \n\0");
-
-    LED_Ctrl(RED_LED, LED_OFF);
-    LED_Ctrl(BLUE_LED, LED_OFF);
 
     for(;;)
     {
-        msg = "\r\nEnter a character: \0";
+        msg = "\r\nEnter Command: \0";
         sciA_TxmtString(msg);
 
         //cycle = Get_Xint1Cycle();
-        //LED_Ctrl(BLUE_LED, cycle); // LED_TOGGLE);
+        //LED_Ctrl(BLUE_LED, cycle);
+        //while(1) {  Delay(1000); } // test
 
-        //while(1) {  Delay(1000);  }
-
-        // Get character
+        // Get Command
         ReceivedChar = sciA_RecvByte();
 
-        // Echo character back
-        msg = "    You sent: \0";
-        sciA_TxmtString(msg);
+        // Echo Command
+        sciA_TxmtString("   Your Command: \0");
         sciA_TxmtByte(ReceivedChar);
-
         LED_BlinkRateSet(ReceivedChar);
-
         ReceivedChar = 0xFF;
-
-        /*
-        if (ReceivedChar=='y') {
-            //ConfigCpuTimer(&CpuTimer1, 90, 2000000);
-            LED_Ctrl(RED_LED, LED_ON);
-            //LED_Ctrl(BLUE_LED, LED_TOGGLE);
-        }
-        else {
-            LED_Ctrl(RED_LED, LED_OFF);
-        }*/
-
         LoopCount++;
     }
 }
@@ -134,7 +114,7 @@ void main(void)
 /*------------------------------------------------------------*/
 void LED_BlinkRateSet(char iVal)
 {
-    char lArr[16]='NULL';
+    char sysResponce=1, lArr[16]='NULL';
 
     BlinkRate = iVal;
     if (BlinkRate == '+')
@@ -198,15 +178,14 @@ void LED_BlinkRateSet(char iVal)
             ConfigCpuTimer(&CpuTimer0, 90, PERIOD_025SEC); //   .25 second
             break;
         }
-        //case 6:
         case 'r':
         {
+            sysResponce=0;
             u_ftoa(BlinkRate_Hz, lArr, 2);
             sciA_TxmtString("\n\rLED BLINK RATE : ");
             if(BlinkRate_Hz < 1) sciA_TxmtByte('0');
             sciA_TxmtString(lArr);
             sciA_TxmtString(" Hz\n\r");
-            //blink-rate, which is returned as 0Hz
             break;
         }
         case 's':
@@ -218,6 +197,17 @@ void LED_BlinkRateSet(char iVal)
          default :
             break;
     }
+
+    // Sys responds with the frequency
+    if(sysResponce)
+    {
+        u_ftoa(BlinkRate_Hz, lArr, 2);
+        sciA_TxmtString("\n\rLED BLINK RATE : ");
+        if(BlinkRate_Hz < 1) sciA_TxmtByte('0');
+        sciA_TxmtString(lArr);
+        sciA_TxmtString(" Hz\n\r");
+    }
+    return;
 }
 
 
@@ -225,7 +215,10 @@ void LED_BlinkRateSet(char iVal)
 /*------------------------------------------------------------*/
 void InitApp(void)
 {
-
+    LED_Ctrl(RED_LED, LED_OFF);
+    LED_Ctrl(BLUE_LED, LED_OFF);
+    sciA_TxmtString("\r\n\n\nSMART BULB CTRL!\0");
+    return;
 }
 
 /*------------------------------------------------------------*/
