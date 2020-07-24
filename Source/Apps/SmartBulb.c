@@ -1,6 +1,6 @@
 //###########################################################################
 //
-// FILE:   Example_2806xScia_Echoback.c
+// FILE:   SmartBulb.c
 //
 // TITLE:  SCI Echo Back Example
 //!
