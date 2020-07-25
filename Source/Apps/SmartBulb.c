@@ -32,13 +32,13 @@
 #define PERIOD_0_5SEC  500000    // 0.5 second
 #define PERIOD_0_25SEC 250000    // 0.25 second
 
-#define PERIOD_COOL_DOWN   120000000 // 1Min
+#define PERIOD_COOL_DOWN   120000000 // 2Min
 #define XINT1_CYCLE_CNT    1
 
 
 /* Private typedef --------------------------------------------*/
 eLedState SmartBulbStatus;
-int coolDown_f;
+int coolDownCnt, coolDown_f;
 
 /* Global variables -------------------------------------------*/
 volatile int toggleCount = 0;
@@ -85,6 +85,7 @@ void main(void)
     BlinkRateCnt=0;
     BlinkRate_Hz=0;
     coolDown_f=0;
+    coolDownCnt=0;
     SmartBulbStatus=LED_OFF;
 
     for(;;)
@@ -255,11 +256,11 @@ void InitDevice(void)
       // Configure CPU-Timer 0 to interrupt every 1 seconds(in uSeconds)
       ConfigCpuTimer(&CpuTimer0, 90, PERIOD_1SEC);
 
-      // Configure CPU-Timer 1 to interrupt every 30 seconds
-      ConfigCpuTimer(&CpuTimer1, 90, 30*PERIOD_1SEC);
+      // Configure CPU-Timer 1 to interrupt every 120 seconds
+      ConfigCpuTimer(&CpuTimer1, 90, PERIOD_1SEC); // PERIOD_COOL_DOWN
 
-      // Configure CPU-Timer 2 to interrupt every 60 seconds
-      ConfigCpuTimer(&CpuTimer2, 90, PERIOD_COOL_DOWN);
+      // Configure CPU-Timer 2 to interrupt every 30 seconds
+      ConfigCpuTimer(&CpuTimer2, 90, 30*PERIOD_1SEC);
 
       // Initialize the SCI FIFO
       scia_fifo_init();
@@ -272,7 +273,7 @@ void InitDevice(void)
 
 /*------------------------------------------------------------*/
 /*------------------------------------------------------------*/
-interrupt void TINT0_ISR(void)
+interrupt void TINT0_ISR(void) // TINT0_ISR(void)
 {
     // Insert ISR Code here
     CpuTimer0.InterruptCount++;
@@ -286,41 +287,55 @@ interrupt void TINT0_ISR(void)
     // To receive more interrupts from this PIE group, acknowledge this interrupt
     PieCtrlRegs.PIEACK.all = PIEACK_GROUP1;
 }
+
+
 interrupt void INT13_ISR(void) // TINT1_ISR(void)
 {
     // Insert ISR Code here
     CpuTimer1.InterruptCount++;
 
-    if ( coolDown_f > 0 )
+    if ( SmartBulbStatus==LED_ON)
     {
-           // On BLUE_LED
-           LED_Ctrl(RED_LED, LED_ON); // LED_OFF
-           coolDown_f=0;
-           SmartBulbStatus=LED_ON; // update led status
-           sciA_TxmtString("\r\nWAKE UP FROM SYSTEM COOL DOWN!\r\n");
+        if(++coolDownCnt >= 120) // 2min
+        {
+            coolDownCnt=0;
+
+            // Enable cool down
+            coolDown_f++;
+
+            // Toggle BLUE_LED once per 30Sec
+            LED_Ctrl(RED_LED, LED_OFF); // LED_OFF
+            SmartBulbStatus=LED_OFF; // update led status
+
+            // Configure CPU-Timer 1 to interrupt every 30 seconds
+            ConfigCpuTimer(&CpuTimer2, 90, 30*PERIOD_1SEC);
+
+            sciA_TxmtString("\r\nSYSTEM COOL DOWN ENABLE!\r\n");
+        }
+    }
+    else
+    {
+        if(++coolDownCnt >= 120) // 2min
+            coolDownCnt=0;
     }
 
     // To receive more interrupts from this PIE group, acknowledge this interrupt
     PieCtrlRegs.PIEACK.all = PIEACK_GROUP1;
 }
+
+
 interrupt void INT14_ISR(void) // TINT2_ISR(void)
 {
     // Insert ISR Code here
     CpuTimer2.InterruptCount++;
 
-    if ( SmartBulbStatus==LED_ON)
+    if ( coolDown_f > 0 )
     {
-        // Enable cool down
-        coolDown_f++;
-
-        // Toggle BLUE_LED once per 30Sec
-        LED_Ctrl(RED_LED, LED_OFF); // LED_OFF
-        SmartBulbStatus=LED_OFF; // update led status
-
-        // Configure CPU-Timer 1 to interrupt every 30 seconds
-        ConfigCpuTimer(&CpuTimer1, 90, 30*PERIOD_1SEC);
-
-        sciA_TxmtString("\r\nSYSTEM COOL DOWN ENABLE!\r\n");
+          // On BLUE_LED
+          LED_Ctrl(RED_LED, LED_ON); // LED_OFF
+          coolDown_f=0;
+          SmartBulbStatus=LED_ON; // update led status
+          sciA_TxmtString("\r\nWAKE UP FROM SYSTEM COOL DOWN!\r\n");
     }
 
     // To receive more interrupts from this PIE group, acknowledge this interrupt

@@ -8,11 +8,13 @@ DateCreated :   07/18/2020
 //Bug: 
 //solution: 
 //COOL DOWN functionality development and integration under progress
+//STATISTICS functionality development and integration under progress
 @
 {
-COOL DOWN: Every 2 minutes the system must “cool down” for 30 seconds.
-The speed will be set to zero and the LED turned off.
-After 30 seconds the speed will return to the speed last set.
+"COOL DOWN: Every 2 minutes the system must “cool down” for 30 seconds.
+After 30 seconds the speed will return to the speed last set."
+
+"STATISTICS: The user can send an ‘s’ key for statistics."
 }
 
 
