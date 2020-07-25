@@ -26,20 +26,19 @@
 /* Private define ---------------------------------------------*/
 #define MAX_ADC_VALUE 4095 //max ADC value used in time delay
 
-#define PERIOD_1SEC   1000000   //   1 second
-#define PERIOD_2SEC   2000000   //   2 second
-#define PERIOD_15SEC  1500000   // 1.5 second
-#define PERIOD_05SEC  500000    //  .5 second
-#define PERIOD_025SEC 250000    //  .25 second
+#define PERIOD_1SEC   1000000    //   1 second
+#define PERIOD_2SEC   2000000    //   2 second
+#define PERIOD_1_5SEC  1500000   // 1.5 second
+#define PERIOD_0_5SEC  500000    // 0.5 second
+#define PERIOD_0_25SEC 250000    // 0.25 second
 
-#define PERIOD_1SEC   1000000   //   1 second
-#define PERIOD_2SEC   2000000   //   2 second
-#define PERIOD_15SEC  1500000   // 1.5 second
-#define PERIOD_05SEC  500000    //  .5 second
-#define PERIOD_025HZ  250000     // .25 second
+#define PERIOD_COOL_DOWN   120000000 // 1Min
+#define XINT1_CYCLE_CNT    1
+
 
 /* Private typedef --------------------------------------------*/
-
+eLedState SmartBulbStatus;
+int coolDown_f;
 
 /* Global variables -------------------------------------------*/
 volatile int toggleCount = 0;
@@ -47,7 +46,6 @@ char HwVersionNumber[32]="ver: 001_Test";
 char SwVersionNumber[32]="ver: 001_Test";
 
 /* Private variables ------------------------------------------*/
-static Uint16 tempCount;
 Uint16 LoopCount;
 Uint16 ErrorCount;
 char BlinkRate, BlinkRateCnt;
@@ -86,18 +84,13 @@ void main(void)
     BlinkRate=0;
     BlinkRateCnt=0;
     BlinkRate_Hz=0;
-
+    coolDown_f=0;
+    SmartBulbStatus=LED_OFF;
 
     for(;;)
     {
+        // Get user Command
         sciA_TxmtString("\r\nEnter Command: \0");
-
-        // Ext Intrpt test code
-        //cycle = Get_Xint1Cycle();
-        //LED_Ctrl(BLUE_LED, cycle);
-        //while(1) {  Delay(1000); } // test
-
-        // Get Command
         ReceivedChar = sciA_RecvByte();
 
         // Echo Command
@@ -113,7 +106,10 @@ void main(void)
 /*------------------------------------------------------------*/
 void LED_BlinkRateSet(char iVal)
 {
-    char sysResponce=1, lArr[16]=0;
+    char sysResponce=1;
+    char lArr[16] = {0};
+
+    if(coolDown_f) return; // return when cool down on
 
     BlinkRate = iVal;
     if (BlinkRate == '+')
@@ -127,12 +123,15 @@ void LED_BlinkRateSet(char iVal)
         BlinkRate = BlinkRateCnt;
     }
 
+    SmartBulbStatus=LED_ON;
+
     switch (BlinkRate)
     {
         case 0:
         case 'a':
         {
             BlinkRate=BlinkRateCnt=0;          //  LED OFF
+            SmartBulbStatus=LED_OFF;
             BlinkRate_Hz = 0.00;
             LED_Ctrl(RED_LED, LED_OFF);
             break;
@@ -150,7 +149,7 @@ void LED_BlinkRateSet(char iVal)
         {
             BlinkRate=BlinkRateCnt=4;
             BlinkRate_Hz = 0.33;
-            ConfigCpuTimer(&CpuTimer0, 90, PERIOD_15SEC); // 1.5 second
+            ConfigCpuTimer(&CpuTimer0, 90, PERIOD_1_5SEC); // 1.5 second
             break;
         }
         case 3:
@@ -166,7 +165,7 @@ void LED_BlinkRateSet(char iVal)
         {
             BlinkRate=BlinkRateCnt=2;
             BlinkRate_Hz = 1.00;
-            ConfigCpuTimer(&CpuTimer0, 90, PERIOD_05SEC); //   .5 second
+            ConfigCpuTimer(&CpuTimer0, 90, PERIOD_0_5SEC); //   .5 second
             break;
         }
         case 1:
@@ -174,7 +173,7 @@ void LED_BlinkRateSet(char iVal)
         {
             BlinkRate=BlinkRateCnt=1;
             BlinkRate_Hz = 2.00;
-            ConfigCpuTimer(&CpuTimer0, 90, PERIOD_025SEC); //   .25 second
+            ConfigCpuTimer(&CpuTimer0, 90, PERIOD_0_25SEC); //   .25 second
             break;
         }
         case 'r':
@@ -197,7 +196,7 @@ void LED_BlinkRateSet(char iVal)
             break;
     }
 
-    // Sys responds with the frequency
+    // System responds with the frequency
     if(sysResponce)
     {
         u_ftoa(BlinkRate_Hz, lArr, 2);
@@ -248,20 +247,24 @@ void InitDevice(void)
       InitPieVectTable();
 
       // Initialize all the Device Peripherals.
-      //InitPeripherals();
+      //InitPeripherals(); // Need to develop
 
       // Initialize the Cpu Timers
       InitCpuTimers();
 
-      // Configure CPU-Timer 0 to interrupt every 500 milliseconds:
-      // 90MHz CPU Freq, 100 millisecond Period (in uSeconds)
-      ConfigCpuTimer(&CpuTimer0, 90, 5000000);
-     // ConfigCpuTimer(&CpuTimer1, 90, 5000000);
-     // ConfigCpuTimer(&CpuTimer2, 90, 5000000);
+      // Configure CPU-Timer 0 to interrupt every 1 seconds(in uSeconds)
+      ConfigCpuTimer(&CpuTimer0, 90, PERIOD_1SEC);
+
+      // Configure CPU-Timer 1 to interrupt every 30 seconds
+      ConfigCpuTimer(&CpuTimer1, 90, 30*PERIOD_1SEC);
+
+      // Configure CPU-Timer 2 to interrupt every 60 seconds
+      ConfigCpuTimer(&CpuTimer2, 90, PERIOD_COOL_DOWN);
 
       // Initialize the SCI FIFO
       scia_fifo_init();
-      // Initalize SCI for echoback
+
+      // Initialize the SCI
       SCIa_Init();
 
       return;
@@ -274,9 +277,11 @@ interrupt void TINT0_ISR(void)
     // Insert ISR Code here
     CpuTimer0.InterruptCount++;
 
-    // Toggle BLUE_LED once per 500 milliseconds
-    if(BlinkRateCnt>0)
-    LED_Ctrl(BLUE_LED, LED_TOGGLE);
+    // Toggle BLUE_LED
+    if(BlinkRateCnt>0 && coolDown_f==0)
+    {
+        LED_Ctrl(BLUE_LED, LED_TOGGLE);
+    }
 
     // To receive more interrupts from this PIE group, acknowledge this interrupt
     PieCtrlRegs.PIEACK.all = PIEACK_GROUP1;
@@ -286,8 +291,14 @@ interrupt void INT13_ISR(void) // TINT1_ISR(void)
     // Insert ISR Code here
     CpuTimer1.InterruptCount++;
 
-    // Toggle RED_LED once per 500 milliseconds
-    //LED_Ctrl(RED_LED, LED_TOGGLE); // LED_ON
+    if ( coolDown_f > 0 )
+    {
+           // On BLUE_LED
+           LED_Ctrl(RED_LED, LED_ON); // LED_OFF
+           coolDown_f=0;
+           SmartBulbStatus=LED_ON; // update led status
+           sciA_TxmtString("\r\nWAKE UP FROM SYSTEM COOL DOWN!\r\n");
+    }
 
     // To receive more interrupts from this PIE group, acknowledge this interrupt
     PieCtrlRegs.PIEACK.all = PIEACK_GROUP1;
@@ -297,8 +308,20 @@ interrupt void INT14_ISR(void) // TINT2_ISR(void)
     // Insert ISR Code here
     CpuTimer2.InterruptCount++;
 
-    // Toggle BLUE_LED once per 500 milliseconds
-    LED_Ctrl(RED_LED, LED_TOGGLE); // LED_OFF
+    if ( SmartBulbStatus==LED_ON)
+    {
+        // Enable cool down
+        coolDown_f++;
+
+        // Toggle BLUE_LED once per 30Sec
+        LED_Ctrl(RED_LED, LED_OFF); // LED_OFF
+        SmartBulbStatus=LED_OFF; // update led status
+
+        // Configure CPU-Timer 1 to interrupt every 30 seconds
+        ConfigCpuTimer(&CpuTimer1, 90, 30*PERIOD_1SEC);
+
+        sciA_TxmtString("\r\nSYSTEM COOL DOWN ENABLE!\r\n");
+    }
 
     // To receive more interrupts from this PIE group, acknowledge this interrupt
     PieCtrlRegs.PIEACK.all = PIEACK_GROUP1;
@@ -309,13 +332,13 @@ interrupt void XINT1_ISR(void)  // XINT1_ISR - INT1.4
     // Insert ISR Code here
     xint1Counter = XIntruptRegs.XINT1CTR;   //capture the count
 
-    if (++xint1Cycle >= 3) // XINT1_CYCLE=3
-    {
-        xint1Cycle = 0;
-    }
+    //if (++xint1Cycle >= XINT1_CYCLE_CNT)    xint1Cycle = 0;
 
-    // Acknowledge this interrupt to service next interrupt from group 1
-    // Must use the mask value, don't use bit value b/c of read-modify-write effect
+    // Serve Ext Intrpt: PANIC BUTTON pressed, the unit stops the blinking.
+    sciA_TxmtString("\r\nUNIT STOPPED BY PANIC BUTTON!\r\n");
+    ReceivedChar='a';
+    LED_BlinkRateSet(ReceivedChar);
+
     // To receive more interrupts from this PIE group, acknowledge this interrupt
     PieCtrlRegs.PIEACK.all = PIEACK_GROUP1;
 }

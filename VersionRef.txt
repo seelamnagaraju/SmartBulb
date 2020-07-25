@@ -1,5 +1,19 @@
 # SmartBulb
 Controller  :   TMS320F28069M
 DateCreated :   07/18/2020
+//-------------------------------------------------------------------//
+
+//------"ver: 001"; -------//Released on 07/18/2020
+//added source codes to the project
+//Bug: 
+//solution: 
+//COOL DOWN functionality development and integration under progress
+@
+{
+COOL DOWN: Every 2 minutes the system must “cool down” for 30 seconds.
+The speed will be set to zero and the LED turned off.
+After 30 seconds the speed will return to the speed last set.
+}
 
 
+//---------------@ Enf of File @-------------------------------------//

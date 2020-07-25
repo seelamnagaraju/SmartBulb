@@ -29,7 +29,7 @@
 #include "DSP28x_Project.h"
 #include "F2806x_SysCtrl.h"
 #include "F2806x_Gpio.h"
-//#include "F2806x_Xint1.h"
+#include "F2806x_Cla_typedefs.h"
 #include "F2806x_PieCtrl.h"
 #include "F2806x_PieVect.h"
 #include "F2806x_Adc.h"

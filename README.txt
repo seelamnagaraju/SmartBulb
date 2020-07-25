@@ -1,7 +1,7 @@
 # SmartBulb
 Controller  :   TMS320F28069M
 DateCreated :   07/17/2020
-
+//---------------@ Enf of File @-------------------------------------//
 Peripherals:
 --------------
 LED
@@ -72,70 +72,6 @@ pointers
 Function Pointers
 ============================================== 
 
-/*****************************************************************************
-** Function name:		HWInitDriver
-** Descriptions :		external INT handler
-** parameters:			@arg1- is the board-type.
-                        @arg2- pointer to FWCallBack()
-** Returned value:		None
-*****************************************************************************/
-unsigned char HWInitDriver(unsigned char arg1, arg2)
-{
-   // Initialize the LED driver
-   // LED is set to speed 0, off
-}
 
-/*****************************************************************************
-** Function name :		HWSetSpeed
-** Descriptions  :		Value of the speed to set.
-** parameters    :		None
-** Returned value:		None
-*****************************************************************************/
-unsigned char HWSetSpeed(unsigned char spd)
-{
-    stmts;
-    return spd;  // speed requested and the speed set
-}
-
-===========================================================================
-GPIO CONTROL REGISTERS:
-GPACTRL 	0x6F80  GPIO A Control Register 			(GPIO0 to 31)
-GPAQSEL1 	0x6F82  GPIO A Qualifier Select 1 Register 	(GPIO0 to 15)
-GPAQSEL2 	0x6F84  GPIO A Qualifier Select 2 Register 	(GPIO16 to 31)
-GPAMUX1 	0x6F86  GPIO A MUX 1 Register 				(GPIO0 to 15)
-GPAMUX2 	0x6F88  GPIO A MUX 2 Register 				(GPIO16 to 31)
-GPADIR 		0x6F8A  GPIO A Direction Register			(GPIO0 to 31)
-GPAPUD 		0x6F8C  GPIO A Pullup Disable Register		(GPIO0 to 31)
-
-GPBCTRL 	0x6F90  GPIO B Control Register 			(GPIO32 to 44)
-GPBQSEL1 	0x6F92  GPIO B Qualifier Select 1 Register 	(GPIO32 to 44)
-GPBMUX1 	0x6F96  GPIO B MUX 1 Register 				(GPIO32 to 44)
-GPBMUX2 	0x6F98  GPIO B MUX 2 Register 				(GPIO50 to 58)  ***
-GPBDIR 		0x6F9A  GPIO B Direction Register 			(GPIO32 to 44)
-GPBPUD 		0x6F9C  GPIO B Pullup Disable Register 		(GPIO32 to 44)
----------------------------------------------------------------------------
-GPIO DATA REGISTERS:
-GPADAT 		0x6FC0  GPIO A Data Register 				(GPIO0 to 31)
-GPASET 		0x6FC2  GPIO A Data Set Register 			(GPIO0 to 31)
-GPACLEAR 	0x6FC4  GPIO A Data Clear Register 			(GPIO0 to 31)
-GPATOGGLE 	0x6FC6  GPIO A Data Toggle Register			(GPIO0 to 31)
-GPBDAT 		0x6FC8  GPIO B Data Register 				(GPIO32 to 44)
-GPBSET 		0x6FCA  GPIO B Data Set Register 			(GPIO32 to 44)
-GPBCLEAR 	0x6FCC  GPIO B Data Clear Register 			(GPIO32 to 44)
-GPBTOGGLE 	0x6FCE  GPIO B Data Toggle Register 		(GPIO32 to 44)
--------------------------------------------------------------------------
-AIODAT 		0x6FD8  Analog I/O Data Register 			(AIO0 to AIO15)
-AIOSET 		0x6FDA  Analog I/O Data Set Register 		(AIO0 to AIO15)
-AIOCLEAR 	0x6FDC  Analog I/O Data Clear Register 		(AIO0 to AIO15)
-AIOTOGGLE 	0x6FDE  Analog I/O Data Toggle Register 	(AIO0 to AIO15)
--------------------------------------------------------------------------
-GPIO INTERRUPT 
-GPIOXINT1SEL 0x6FE0  XINT1 GPIO Input Select Register 	(GPIO0 to 31)
-GPIOXINT2SEL 0x6FE1  XINT2 GPIO Input Select Register 	(GPIO0 to 31)
-GPIOXINT3SEL 0x6FE2  XINT3 GPIO Input Select Register 	(GPIO0 to 31)
-GPIOLPMSEL 	 0x6FE8  LPM   GPIO Select Register 		(GPIO0 to 31)
--------------------------------------------------------------------------
-
-
-
+//---------------@ Enf of File @----------------------------------------//
 
