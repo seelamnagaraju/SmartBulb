@@ -13,7 +13,6 @@ ORDERED_OBJS += \
 -lrts2800_fpu32_fast_supplement.lib \
 -lrts2800_fpu32.lib \
 "./Source/Apps/SmartBulb.obj" \
-"./Source/Apps/TempMonitor.obj" \
 "./Source/Apps/adc.obj" \
 "./Source/Apps/dac.obj" \
 "./Source/Apps/delay.obj" \
@@ -187,8 +186,8 @@ Example_2806xSci_Echoback.hex: $(EXE_OUTPUTS)
 # Other Targets
 clean:
 	-$(RM) $(BIN_OUTPUTS__QUOTED)$(EXE_OUTPUTS__QUOTED)
-	-$(RM) "Source\Apps\SmartBulb.obj" "Source\Apps\TempMonitor.obj" "Source\Apps\adc.obj" "Source\Apps\dac.obj" "Source\Apps\delay.obj" "Source\Apps\dma.obj" "Source\Apps\gpio.obj" "Source\Apps\i2c.obj" "Source\Apps\pwm.obj" "Source\Apps\sci.obj" "Source\Apps\spi.obj" "Source\Apps\timer.obj" "Source\Apps\utils.obj" "Source\Apps\watchdog.obj" "Source\HwDrv\F2806x_Adc.obj" "Source\HwDrv\F2806x_CodeStartBranch.obj" "Source\HwDrv\F2806x_CpuTimers.obj" "Source\HwDrv\F2806x_DefaultIsr.obj" "Source\HwDrv\F2806x_Dma.obj" "Source\HwDrv\F2806x_GlobalVariableDefs.obj" "Source\HwDrv\F2806x_Gpio.obj" "Source\HwDrv\F2806x_I2C.obj" "Source\HwDrv\F2806x_PieCtrl.obj" "Source\HwDrv\F2806x_PieVect.obj" "Source\HwDrv\F2806x_Sci.obj" "Source\HwDrv\F2806x_SysCtrl.obj" "Source\HwDrv\F2806x_Xint1.obj" "Source\HwDrv\F2806x_usDelay.obj" 
-	-$(RM) "Source\Apps\SmartBulb.d" "Source\Apps\TempMonitor.d" "Source\Apps\adc.d" "Source\Apps\dac.d" "Source\Apps\delay.d" "Source\Apps\dma.d" "Source\Apps\gpio.d" "Source\Apps\i2c.d" "Source\Apps\pwm.d" "Source\Apps\sci.d" "Source\Apps\spi.d" "Source\Apps\timer.d" "Source\Apps\utils.d" "Source\Apps\watchdog.d" "Source\HwDrv\F2806x_Adc.d" "Source\HwDrv\F2806x_CpuTimers.d" "Source\HwDrv\F2806x_DefaultIsr.d" "Source\HwDrv\F2806x_Dma.d" "Source\HwDrv\F2806x_GlobalVariableDefs.d" "Source\HwDrv\F2806x_Gpio.d" "Source\HwDrv\F2806x_I2C.d" "Source\HwDrv\F2806x_PieCtrl.d" "Source\HwDrv\F2806x_PieVect.d" "Source\HwDrv\F2806x_Sci.d" "Source\HwDrv\F2806x_SysCtrl.d" "Source\HwDrv\F2806x_Xint1.d" 
+	-$(RM) "Source\Apps\SmartBulb.obj" "Source\Apps\adc.obj" "Source\Apps\dac.obj" "Source\Apps\delay.obj" "Source\Apps\dma.obj" "Source\Apps\gpio.obj" "Source\Apps\i2c.obj" "Source\Apps\pwm.obj" "Source\Apps\sci.obj" "Source\Apps\spi.obj" "Source\Apps\timer.obj" "Source\Apps\utils.obj" "Source\Apps\watchdog.obj" "Source\HwDrv\F2806x_Adc.obj" "Source\HwDrv\F2806x_CodeStartBranch.obj" "Source\HwDrv\F2806x_CpuTimers.obj" "Source\HwDrv\F2806x_DefaultIsr.obj" "Source\HwDrv\F2806x_Dma.obj" "Source\HwDrv\F2806x_GlobalVariableDefs.obj" "Source\HwDrv\F2806x_Gpio.obj" "Source\HwDrv\F2806x_I2C.obj" "Source\HwDrv\F2806x_PieCtrl.obj" "Source\HwDrv\F2806x_PieVect.obj" "Source\HwDrv\F2806x_Sci.obj" "Source\HwDrv\F2806x_SysCtrl.obj" "Source\HwDrv\F2806x_Xint1.obj" "Source\HwDrv\F2806x_usDelay.obj" 
+	-$(RM) "Source\Apps\SmartBulb.d" "Source\Apps\adc.d" "Source\Apps\dac.d" "Source\Apps\delay.d" "Source\Apps\dma.d" "Source\Apps\gpio.d" "Source\Apps\i2c.d" "Source\Apps\pwm.d" "Source\Apps\sci.d" "Source\Apps\spi.d" "Source\Apps\timer.d" "Source\Apps\utils.d" "Source\Apps\watchdog.d" "Source\HwDrv\F2806x_Adc.d" "Source\HwDrv\F2806x_CpuTimers.d" "Source\HwDrv\F2806x_DefaultIsr.d" "Source\HwDrv\F2806x_Dma.d" "Source\HwDrv\F2806x_GlobalVariableDefs.d" "Source\HwDrv\F2806x_Gpio.d" "Source\HwDrv\F2806x_I2C.d" "Source\HwDrv\F2806x_PieCtrl.d" "Source\HwDrv\F2806x_PieVect.d" "Source\HwDrv\F2806x_Sci.d" "Source\HwDrv\F2806x_SysCtrl.d" "Source\HwDrv\F2806x_Xint1.d" 
 	-$(RM) "Source\HwDrv\F2806x_CodeStartBranch.d" "Source\HwDrv\F2806x_usDelay.d" 
 	-@echo 'Finished clean'
 	-@echo ' '

@@ -6,6 +6,7 @@ Source/Apps/SmartBulb.obj: C:/Users/mamat/SmartBulb/Header/Common/DSP28x_Project
 Source/Apps/SmartBulb.obj: C:/Users/mamat/SmartBulb/Header/Common/F2806x_Cla_typedefs.h
 Source/Apps/SmartBulb.obj: C:/Users/mamat/SmartBulb/Header/HwDrv/F2806x_Device.h
 Source/Apps/SmartBulb.obj: C:/Users/mamat/SmartBulb/Header/HwDrv/F2806x_Adc.h
+Source/Apps/SmartBulb.obj: C:/Users/mamat/SmartBulb/Header/HwDrv/F2806x_Device.h
 Source/Apps/SmartBulb.obj: C:/Users/mamat/SmartBulb/Header/HwDrv/F2806x_BootVars.h
 Source/Apps/SmartBulb.obj: C:/Users/mamat/SmartBulb/Header/HwDrv/F2806x_Cla.h
 Source/Apps/SmartBulb.obj: C:/Users/mamat/SmartBulb/Header/HwDrv/F2806x_Comp.h
@@ -44,7 +45,6 @@ Source/Apps/SmartBulb.obj: C:/Users/mamat/SmartBulb/Header/Apps/i2c.h
 Source/Apps/SmartBulb.obj: C:/Users/mamat/SmartBulb/Header/Apps/pwm.h
 Source/Apps/SmartBulb.obj: C:/Users/mamat/SmartBulb/Header/Apps/sci.h
 Source/Apps/SmartBulb.obj: C:/Users/mamat/SmartBulb/Header/Apps/spi.h
-Source/Apps/SmartBulb.obj: C:/Users/mamat/SmartBulb/Header/Apps/TempMonitor.h
 Source/Apps/SmartBulb.obj: C:/Users/mamat/SmartBulb/Header/Apps/timer.h
 Source/Apps/SmartBulb.obj: C:/Users/mamat/SmartBulb/Header/Apps/watchdog.h
 Source/Apps/SmartBulb.obj: C:/Users/mamat/SmartBulb/Header/Apps/utils.h
@@ -55,6 +55,7 @@ C:/Users/mamat/SmartBulb/Header/Common/DSP28x_Project.h:
 C:/Users/mamat/SmartBulb/Header/Common/F2806x_Cla_typedefs.h: 
 C:/Users/mamat/SmartBulb/Header/HwDrv/F2806x_Device.h: 
 C:/Users/mamat/SmartBulb/Header/HwDrv/F2806x_Adc.h: 
+C:/Users/mamat/SmartBulb/Header/HwDrv/F2806x_Device.h: 
 C:/Users/mamat/SmartBulb/Header/HwDrv/F2806x_BootVars.h: 
 C:/Users/mamat/SmartBulb/Header/HwDrv/F2806x_Cla.h: 
 C:/Users/mamat/SmartBulb/Header/HwDrv/F2806x_Comp.h: 
@@ -93,7 +94,6 @@ C:/Users/mamat/SmartBulb/Header/Apps/i2c.h:
 C:/Users/mamat/SmartBulb/Header/Apps/pwm.h: 
 C:/Users/mamat/SmartBulb/Header/Apps/sci.h: 
 C:/Users/mamat/SmartBulb/Header/Apps/spi.h: 
-C:/Users/mamat/SmartBulb/Header/Apps/TempMonitor.h: 
 C:/Users/mamat/SmartBulb/Header/Apps/timer.h: 
 C:/Users/mamat/SmartBulb/Header/Apps/watchdog.h: 
 C:/Users/mamat/SmartBulb/Header/Apps/utils.h: 

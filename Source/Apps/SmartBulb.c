@@ -48,6 +48,7 @@ char SwVersionNumber[32]="ver: 001_Test";
 /* Private variables ------------------------------------------*/
 Uint16 LoopCount;
 Uint16 ErrorCount;
+Uint32 tempareture;
 char BlinkRate, BlinkRateCnt;
 char ReceivedChar, cycle;
 float BlinkRate_Hz;
@@ -87,6 +88,21 @@ void main(void)
     coolDown_f=0;
     coolDownCnt=0;
     SmartBulbStatus=LED_OFF;
+    tempareture=0;
+
+    InitAdc();
+    StartTempSampling();
+    tempareture=0;
+
+    while (1)
+    {
+      ConvertTemp();
+      LED_BlinkRateSet('c');
+      tempareture = GetTempRawData();
+      Delay(MAX_ADC_VALUE - tempareture);
+      toggleCount += 1;
+    }
+
 
     for(;;)
     {

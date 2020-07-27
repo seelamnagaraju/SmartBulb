@@ -45,7 +45,6 @@
 #include "pwm.h"
 #include "sci.h"
 #include "spi.h"
-#include "TempMonitor.h"
 #include "timer.h"
 #include "watchdog.h"
 #include "utils.h"

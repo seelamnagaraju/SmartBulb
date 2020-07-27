@@ -403,6 +403,7 @@ USER12_ISR(void)
 // PIE Group 1 - MUXed into CPU INT1
 //
 
+/*
 //
 // ADCINT1_ISR - ADC is INT1.1 (Can also be ISR for INT10.1 when enabled)
 //
@@ -427,6 +428,7 @@ ADCINT1_ISR(void)
     __asm ("      ESTOP0");
     for(;;);
 }
+*/
 
 //
 // ADCINT2_ISR - ADC is INT1.2 (Can also be ISR for INT10.2 when enabled)
