@@ -90,21 +90,7 @@ void main(void)
     SmartBulbStatus=LED_OFF;
     tempareture=0;
 
-    InitAdc();
-    StartTempSampling();
-    tempareture=0;
-
-    while (1)
-    {
-      ConvertTemp();
-      LED_BlinkRateSet('c');
-      tempareture = GetTempRawData();
-      Delay(MAX_ADC_VALUE - tempareture);
-      toggleCount += 1;
-    }
-
-
-    for(;;)
+    while(1)
     {
         // Get user Command
         sciA_TxmtString("\r\nEnter Command: \0");
@@ -115,6 +101,10 @@ void main(void)
         sciA_TxmtByte(ReceivedChar);
         LED_BlinkRateSet(ReceivedChar);
         ReceivedChar = 0xFF;
+
+        //Read ADC
+        ConvertTemp();
+        tempareture = GetTempRawData();
         LoopCount++;
     }
 }
@@ -284,6 +274,9 @@ void InitDevice(void)
       // Initialize the SCI
       SCIa_Init();
 
+      // Initialize the ADC
+      InitAdc();
+      StartTempSampling();
       return;
 }
 
