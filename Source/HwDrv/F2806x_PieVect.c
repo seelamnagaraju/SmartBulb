@@ -288,6 +288,9 @@ InitPieVectTable(void)
         // Enable TINT0 in the PIE: Group 1 interrupt 7
         PieCtrlRegs.PIEIER1.bit.INTx7 = 1;
 
+        // Enable PIE Gropu 1 INT8
+        PieCtrlRegs.PIEIER1.bit.INTx8 = 1;
+
          //Add code to enable CPU INT1
          IER |= M_INT1;
          IER |= M_INT7;

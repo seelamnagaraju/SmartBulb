@@ -45,6 +45,8 @@ volatile int toggleCount = 0;
 char HwVersionNumber[32]="ver: 001_Test";
 char SwVersionNumber[32]="ver: 001_Test";
 
+unsigned long WakeCount;
+
 /* Private variables ------------------------------------------*/
 Uint16 LoopCount;
 Uint16 ErrorCount;
@@ -89,8 +91,9 @@ void main(void)
     coolDownCnt=0;
     SmartBulbStatus=LED_OFF;
     tempareture=0;
+    WakeCount=0;
 
-    while(1)
+    while (1)
     {
         // Get user Command
         sciA_TxmtString("\r\nEnter Command: \0");
@@ -105,6 +108,9 @@ void main(void)
         //Read ADC
         ConvertTemp();
         tempareture = GetTempRawData();
+
+        WatchDogRefresh();
+
         LoopCount++;
     }
 }
@@ -223,6 +229,7 @@ void InitApp(void)
     LED_Ctrl(RED_LED, LED_OFF);
     LED_Ctrl(BLUE_LED, LED_OFF);
     sciA_TxmtString("\r\n\n\nSMART BULB CTRL!\0");
+    sciA_TxmtString(SwVersionNumber);
     return;
 }
 
@@ -277,6 +284,9 @@ void InitDevice(void)
       // Initialize the ADC
       InitAdc();
       StartTempSampling();
+
+      Watchdog_Init();
+
       return;
 }
 
@@ -302,6 +312,8 @@ interrupt void INT13_ISR(void) // TINT1_ISR(void)
 {
     // Insert ISR Code here
     CpuTimer1.InterruptCount++;
+
+    WatchDogRefresh();
 
     if ( SmartBulbStatus==LED_ON)
     {

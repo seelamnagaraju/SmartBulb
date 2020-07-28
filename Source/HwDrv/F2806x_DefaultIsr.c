@@ -556,9 +556,7 @@ TINT0_ISR(void)
     __asm ("      ESTOP0");
     for(;;);
 }
-*/
 
-//
 // WAKEINT_ISR - INT1.8 is WD, LOW Power
 //
 __interrupt void
@@ -581,6 +579,7 @@ WAKEINT_ISR(void)
     __asm ("      ESTOP0");
     for(;;);
 }
+*/
 
 //
 // PIE Group 2 - MUXed into CPU INT2

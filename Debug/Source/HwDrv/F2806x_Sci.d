@@ -1,6 +1,7 @@
 # FIXED
 
 Source/HwDrv/F2806x_Sci.obj: ../Source/HwDrv/F2806x_Sci.c
+Source/HwDrv/F2806x_Sci.obj: C:/Users/mamat/SmartBulb/Header/Apps/watchdog.h
 Source/HwDrv/F2806x_Sci.obj: C:/Users/mamat/SmartBulb/Header/HwDrv/F2806x_Device.h
 Source/HwDrv/F2806x_Sci.obj: C:/Users/mamat/SmartBulb/Header/HwDrv/F2806x_Adc.h
 Source/HwDrv/F2806x_Sci.obj: C:/Users/mamat/SmartBulb/Header/HwDrv/F2806x_Device.h
@@ -36,6 +37,7 @@ Source/HwDrv/F2806x_Sci.obj: C:/Users/mamat/SmartBulb/Header/Common/F2806x_Cla_d
 Source/HwDrv/F2806x_Sci.obj: C:/Users/mamat/SmartBulb/Header/Common/F2806x_DefaultISR.h
 
 ../Source/HwDrv/F2806x_Sci.c: 
+C:/Users/mamat/SmartBulb/Header/Apps/watchdog.h: 
 C:/Users/mamat/SmartBulb/Header/HwDrv/F2806x_Device.h: 
 C:/Users/mamat/SmartBulb/Header/HwDrv/F2806x_Adc.h: 
 C:/Users/mamat/SmartBulb/Header/HwDrv/F2806x_Device.h: 

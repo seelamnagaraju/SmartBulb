@@ -73,12 +73,9 @@
 void
 InitSysCtrl(void)
 {
-    //
     // Disable the watchdog
-    //
     DisableDog();
 
-    //
     // *IMPORTANT*
     // The Device_cal function, which copies the ADC & oscillator calibration 
     // values from TI reserved OTP into the appropriate trim registers, occurs 
@@ -165,30 +162,6 @@ InitFlash(void)
     // configured occurs before returning.
     //
     __asm(" RPT #7 || NOP");
-}
-
-//
-// ServiceDog - This function resets the watchdog timer. Enable this function 
-// for using ServiceDog in the application
-//
-void
-ServiceDog(void)
-{
-    EALLOW;
-    SysCtrlRegs.WDKEY = 0x0055;
-    SysCtrlRegs.WDKEY = 0x00AA;
-    EDIS;
-}
-
-//
-// DisableDog - This function disables the watchdog timer.
-//
-void
-DisableDog(void)
-{
-    EALLOW;
-    SysCtrlRegs.WDCR= 0x0068;
-    EDIS;
 }
 
 //
