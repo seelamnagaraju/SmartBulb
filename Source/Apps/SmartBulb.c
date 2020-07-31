@@ -32,13 +32,13 @@
 #define PERIOD_0_5SEC  500000    // 0.5 second
 #define PERIOD_0_25SEC 250000    // 0.25 second
 
-#define PERIOD_COOL_DOWN   120000000 // 2Min
+#define PERIOD_COOL_DOWN   60 // 120 // 2Min
 #define XINT1_CYCLE_CNT    1
 
 
 /* Private typedef --------------------------------------------*/
 eLedState SmartBulbStatus;
-int coolDownCnt, coolDown_f;
+int coolDownCnt, coolDown_f, powerOn_f;
 
 /* Global variables -------------------------------------------*/
 volatile int toggleCount = 0;
@@ -89,6 +89,7 @@ void main(void)
     BlinkRate_Hz=0;
     coolDown_f=0;
     coolDownCnt=0;
+    powerOn_f=1;
     SmartBulbStatus=LED_OFF;
     tempareture=0;
     WakeCount=0;
@@ -108,7 +109,6 @@ void main(void)
         //Read ADC
         ConvertTemp();
         tempareture = GetTempRawData();
-
         WatchDogRefresh();
 
         LoopCount++;
@@ -201,9 +201,22 @@ void LED_BlinkRateSet(char iVal)
         }
         case 's':
         {
-            // STATISTICS
-            break;
-        }
+             // STATISTICS
+             sciA_TxmtString("\n\rSTATISTICS Functionality!\n\r");
+             if ( SmartBulbStatus==LED_ON )
+             {
+                 sciA_TxmtString("SMART BULB IS ON!\n\r");
+             }
+             else
+             {
+                 sciA_TxmtString("SMART BULB IS OFF!\n\r");
+             }
+             if(coolDown_f)
+             {
+                 sciA_TxmtString("COOL DOWN Functionality Running!\n\r");
+             }
+             break;
+         }
 
          default :
             break;
@@ -269,11 +282,11 @@ void InitDevice(void)
       // Configure CPU-Timer 0 to interrupt every 1 seconds(in uSeconds)
       ConfigCpuTimer(&CpuTimer0, 90, PERIOD_1SEC);
 
-      // Configure CPU-Timer 1 to interrupt every 120 seconds
-      ConfigCpuTimer(&CpuTimer1, 90, PERIOD_1SEC); // PERIOD_COOL_DOWN
+      // Configure CPU-Timer 1 to interrupt every 1 seconds
+      ConfigCpuTimer(&CpuTimer1, 90, PERIOD_1SEC);
 
       // Configure CPU-Timer 2 to interrupt every 30 seconds
-      ConfigCpuTimer(&CpuTimer2, 90, 30*PERIOD_1SEC);
+      //ConfigCpuTimer(&CpuTimer2, 90, 30*PERIOD_1SEC);
 
       // Initialize the SCI FIFO
       scia_fifo_init();
@@ -281,10 +294,9 @@ void InitDevice(void)
       // Initialize the SCI
       SCIa_Init();
 
-      // Initialize the ADC
+      //Initialize the ADC
       InitAdc();
       StartTempSampling();
-
       Watchdog_Init();
 
       return;
@@ -297,10 +309,10 @@ interrupt void TINT0_ISR(void) // TINT0_ISR(void)
     // Insert ISR Code here
     CpuTimer0.InterruptCount++;
 
-    // Toggle BLUE_LED
+    // Toggle RED_LED
     if(BlinkRateCnt>0 && coolDown_f==0)
     {
-        LED_Ctrl(BLUE_LED, LED_TOGGLE);
+        LED_Ctrl(RED_LED, LED_TOGGLE);  // LED_TOGGLE
     }
 
     // To receive more interrupts from this PIE group, acknowledge this interrupt
@@ -317,14 +329,14 @@ interrupt void INT13_ISR(void) // TINT1_ISR(void)
 
     if ( SmartBulbStatus==LED_ON)
     {
-        if(++coolDownCnt >= 120) // 2min
+        if(++coolDownCnt >= PERIOD_COOL_DOWN) // 2min
         {
             coolDownCnt=0;
 
             // Enable cool down
             coolDown_f++;
 
-            // Toggle BLUE_LED once per 30Sec
+            // Toggle RED_LED once per 30Sec
             LED_Ctrl(RED_LED, LED_OFF); // LED_OFF
             SmartBulbStatus=LED_OFF; // update led status
 
@@ -336,7 +348,7 @@ interrupt void INT13_ISR(void) // TINT1_ISR(void)
     }
     else
     {
-        if(++coolDownCnt >= 120) // 2min
+        if(++coolDownCnt >= PERIOD_COOL_DOWN) // 2min
             coolDownCnt=0;
     }
 
@@ -352,7 +364,7 @@ interrupt void INT14_ISR(void) // TINT2_ISR(void)
 
     if ( coolDown_f > 0 )
     {
-          // On BLUE_LED
+          // On RED_LED
           LED_Ctrl(RED_LED, LED_ON); // LED_OFF
           coolDown_f=0;
           SmartBulbStatus=LED_ON; // update led status

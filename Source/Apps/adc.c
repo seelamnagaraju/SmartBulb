@@ -64,7 +64,6 @@ interrupt void ADCINT1_ISR(void)
     temp += AdcResult.ADCRESULT3;
     aveTemp = temp >> 2;
 
-
     //ack interrupts
     AdcRegs.ADCINTFLGCLR.bit.ADCINT1 = 1;       // Clear ADCINT1 flag
     PieCtrlRegs.PIEACK.all = PIEACK_GROUP1;     // Must acknowledge the PIE group

@@ -5,15 +5,12 @@ DateCreated :   07/18/2020
 
 //------"ver: 001"; -------//Released on 07/18/2020
 //added source codes to the project
-//Bug: 
+//Bug: No
 //solution: 
-//COOL DOWN functionality development and integration under progress
+//
 //STATISTICS functionality development and integration under progress
 @
 {
-"COOL DOWN: Every 2 minutes the system must “cool down” for 30 seconds.
-After 30 seconds the speed will return to the speed last set."
-
 "STATISTICS: The user can send an ‘s’ key for statistics."
 }
 
