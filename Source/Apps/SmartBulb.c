@@ -43,7 +43,7 @@
 
 /* Private define ---------------------------------------------*/
 
-#define _TEST_    1
+//#define _TEST_    1
 
 #ifdef _TEST_
 #define PERIOD_COOL_DOWN   60  // 2Min
