@@ -32,8 +32,24 @@
 #define PERIOD_0_5SEC  500000    // 0.5 second
 #define PERIOD_0_25SEC 250000    // 0.25 second
 
-#define PERIOD_COOL_DOWN   60 // 120 // 2Min
 #define XINT1_CYCLE_CNT    1
+
+
+#define PROGRAM_SMARTBULB     101
+#define PROGRAM_ADC_READ      102
+#define PROGRAM_TEST          103
+#define PROGRAM_SERIAL_DEBUG  104
+
+
+/* Private define ---------------------------------------------*/
+
+#define _TEST_    1
+
+#ifdef _TEST_
+#define PERIOD_COOL_DOWN   60  // 2Min
+#else
+#define PERIOD_COOL_DOWN   120 // 2Min
+#endif
 
 
 /* Private typedef --------------------------------------------*/
@@ -48,9 +64,11 @@ char SwVersionNumber[32]="ver: 001_Test";
 unsigned long WakeCount;
 
 /* Private variables ------------------------------------------*/
-Uint16 LoopCount;
-Uint16 ErrorCount;
-Uint32 tempareture;
+Uint16 LoopCount, ErrorCount;
+Uint16 g_ConfigSel;
+Uint32 tempareture, temp;
+Uint16 i,j, DutyFine, n,update;
+
 char BlinkRate, BlinkRateCnt;
 char ReceivedChar, cycle;
 float BlinkRate_Hz;
@@ -60,10 +78,17 @@ extern volatile Uint16 xint1Counter;   //this variable records latency counts fr
 extern volatile Uint16 xint1Cycle;     //this variable cycles every 3 counts
 
 /* Private Functions ------------------------------------------*/
+void Variable_Init(void);
 void InitDevice(void);
 void InitApp(void);
 Uint16 Get_Xint1Cycle(void);
 void LED_BlinkRateSet(char iVal);
+
+void SmartBulb_main(void);
+void AdcRead(void);
+void AdcRead_main(void);
+void testFuntionality(void);
+
 
 
 /* ISR Function Prototypes -----------------------------------*/
@@ -79,22 +104,55 @@ void main(void)
 {
     InitDevice();
     InitApp();
+    Variable_Init(); // variable initialization
 
-    // variable initialization
-    LoopCount = 0;
-    ErrorCount = 0;
-    cycle = 0;
-    BlinkRate=0;
-    BlinkRateCnt=0;
-    BlinkRate_Hz=0;
-    coolDown_f=0;
-    coolDownCnt=0;
-    powerOn_f=1;
-    SmartBulbStatus=LED_OFF;
-    tempareture=0;
-    WakeCount=0;
+    g_ConfigSel=PROGRAM_SMARTBULB; // PROGRAM_TEST;
 
-    while (1)
+    while(1)
+    {
+        switch(g_ConfigSel)
+        {
+             case PROGRAM_SMARTBULB:
+                 SmartBulb_main();
+                 break;
+
+             case PROGRAM_ADC_READ:
+                 AdcRead_main();
+                 break;
+
+             case PROGRAM_TEST:
+                 testFuntionality();
+                 break;
+
+             default:
+                 while(1) {
+                     WatchDogRefresh();
+                     LoopCount++;
+                     //break;
+                 }
+        } // end of switch
+
+    }//end of while forever
+
+} // end of main
+
+/*------------------------------------------------------------*/
+/*------------------------------------------------------------*/
+void testFuntionality(void)
+{
+    while(1) {
+        WatchDogRefresh();
+        LoopCount++;
+        //break;
+    }
+}
+
+
+/*------------------------------------------------------------*/
+/*------------------------------------------------------------*/
+void SmartBulb_main(void)
+{
+    while(1)
     {
         // Get user Command
         sciA_TxmtString("\r\nEnter Command: \0");
@@ -106,13 +164,50 @@ void main(void)
         LED_BlinkRateSet(ReceivedChar);
         ReceivedChar = 0xFF;
 
-        //Read ADC
-        ConvertTemp();
-        tempareture = GetTempRawData();
+        AdcRead();
         WatchDogRefresh();
-
         LoopCount++;
     }
+}
+
+/*------------------------------------------------------------*/
+/*------------------------------------------------------------*/
+void AdcRead_main(void)
+{
+    while(1)
+    {
+        AdcRead();
+        WatchDogRefresh();
+        LoopCount++;
+    }
+}
+
+/*------------------------------------------------------------*/
+/*------------------------------------------------------------*/
+void AdcRead(void)
+{
+    //Read ADC
+     ConvertTemp();
+     tempareture = GetTempRawData();
+}
+
+/*------------------------------------------------------------*/
+/*------------------------------------------------------------*/
+void Variable_Init(void)
+{
+     LoopCount = 0;
+     ErrorCount = 0;
+     cycle = 0;
+     BlinkRate=0;
+     BlinkRateCnt=0;
+     BlinkRate_Hz=0;
+     coolDown_f=0;
+     coolDownCnt=0;
+     powerOn_f=1;
+     SmartBulbStatus=LED_OFF;
+     tempareture=0;
+     WakeCount=0;
+     return;
 }
 
 /*------------------------------------------------------------*/
@@ -225,6 +320,8 @@ void LED_BlinkRateSet(char iVal)
     // System responds with the frequency
     if(sysResponce)
     {
+        coolDownCnt=0;
+
         u_ftoa(BlinkRate_Hz, lArr, 2);
         sciA_TxmtString("\n\rLED BLINK RATE : ");
         if(BlinkRate_Hz < 1) sciA_TxmtByte('0');
@@ -398,4 +495,3 @@ Uint16 Get_Xint1Cycle(void)
 
 
 //*****************@ End of file @********************************************
-

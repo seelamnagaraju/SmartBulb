@@ -14,5 +14,14 @@ DateCreated :   07/18/2020
 "STATISTICS: The user can send an ‘s’ key for statistics."
 }
 
+/*
+#ifdef __cplusplus
+#pragma DATA_SECTION("SysPwrCtrlRegsFile")
+#else
+#pragma DATA_SECTION(SysPwrCtrlRegs,"SysPwrCtrlRegsFile");
+#endif
+volatile struct SYS_PWR_CTRL_REGS SysPwrCtrlRegs;
+*/
+
 
 //---------------@ Enf of File @-------------------------------------//
