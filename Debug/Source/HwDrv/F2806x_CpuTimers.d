@@ -3,6 +3,7 @@
 Source/HwDrv/F2806x_CpuTimers.obj: ../Source/HwDrv/F2806x_CpuTimers.c
 Source/HwDrv/F2806x_CpuTimers.obj: C:/Users/mamat/SmartBulb/Header/HwDrv/F2806x_Device.h
 Source/HwDrv/F2806x_CpuTimers.obj: C:/Users/mamat/SmartBulb/Header/HwDrv/F2806x_Adc.h
+Source/HwDrv/F2806x_CpuTimers.obj: C:/Users/mamat/SmartBulb/Header/HwDrv/F2806x_Device.h
 Source/HwDrv/F2806x_CpuTimers.obj: C:/Users/mamat/SmartBulb/Header/HwDrv/F2806x_BootVars.h
 Source/HwDrv/F2806x_CpuTimers.obj: C:/Users/mamat/SmartBulb/Header/HwDrv/F2806x_Cla.h
 Source/HwDrv/F2806x_CpuTimers.obj: C:/Users/mamat/SmartBulb/Header/HwDrv/F2806x_Comp.h
@@ -37,6 +38,7 @@ Source/HwDrv/F2806x_CpuTimers.obj: C:/Users/mamat/SmartBulb/Header/Common/F2806x
 ../Source/HwDrv/F2806x_CpuTimers.c: 
 C:/Users/mamat/SmartBulb/Header/HwDrv/F2806x_Device.h: 
 C:/Users/mamat/SmartBulb/Header/HwDrv/F2806x_Adc.h: 
+C:/Users/mamat/SmartBulb/Header/HwDrv/F2806x_Device.h: 
 C:/Users/mamat/SmartBulb/Header/HwDrv/F2806x_BootVars.h: 
 C:/Users/mamat/SmartBulb/Header/HwDrv/F2806x_Cla.h: 
 C:/Users/mamat/SmartBulb/Header/HwDrv/F2806x_Comp.h: 

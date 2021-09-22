@@ -270,26 +270,32 @@ InitPieVectTable(void)
     }
     EDIS;
 
-      //Clear the ACK bits to enable PIE to drive a pulse into the CPU
-      PieCtrlRegs.PIEACK.all = 0xFFFF;
+    //Clear the ACK bits to enable PIE to drive a pulse into the CPU
+         PieCtrlRegs.PIEACK.all = 0xFFFF;
 
-      //Enable the PIE Vector Table
-      PieCtrlRegs.PIECTRL.bit.ENPIE = 1;
+         //Enable the PIE Vector Table
+         PieCtrlRegs.PIECTRL.bit.ENPIE = 1;
 
-      //Add code to enable PIE group 1 interrupt 4 (INT1.4) for XINT1
-      PieCtrlRegs.PIEIER1.bit.INTx4 = 1;
+         //Add code to enable PIE group 1 interrupt 4 (INT1.4) for XINT1
+         PieCtrlRegs.PIEIER1.bit.INTx4 = 1;
 
-     // PieCtrlRegs.PIEIER8.bit.INTx5 = 1;
-     // PieCtrlRegs.PIEIER8.bit.INTx6 = 1;
+        // PieCtrlRegs.PIEIER8.bit.INTx5 = 1;
+        // PieCtrlRegs.PIEIER8.bit.INTx6 = 1;
 
-     // Enable TINT0 in the PIE: Group 1 interrupt 7
-     PieCtrlRegs.PIEIER1.bit.INTx7 = 1;
+         //Enable ADCINT1 in PIE group 1 to enable ADC interrupt
+         PieCtrlRegs.PIEIER1.bit.INTx1 = 1;
 
-      //Add code to enable CPU INT1
-      IER |= M_INT1;
-      IER |= M_INT7;
-      IER |= M_INT13;
-      IER |= M_INT14;
+        // Enable TINT0 in the PIE: Group 1 interrupt 7
+        PieCtrlRegs.PIEIER1.bit.INTx7 = 1;
+
+        // Enable PIE Gropu 1 INT8
+        PieCtrlRegs.PIEIER1.bit.INTx8 = 1;
+
+         //Add code to enable CPU INT1
+         IER |= M_INT1;
+         IER |= M_INT7;
+         IER |= M_INT13;
+         IER |= M_INT14;
 
       //Add code to enable global Interrupts
       EINT;

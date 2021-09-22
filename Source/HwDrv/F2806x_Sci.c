@@ -39,10 +39,9 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 // $
 //###########################################################################
-
 //
 // Included Files
-//
+#include "watchdog.h"
 #include "F2806x_Device.h"     // F2806x Headerfile Include File
 #include "F2806x_Examples.h"   // F2806x Examples Include File
 
@@ -286,6 +285,7 @@ void scia_xmit(int iData)
 {
     while (SciaRegs.SCIFFTX.bit.TXFFST != 0)
     {
+        WatchDogRefresh();
     }
     SciaRegs.SCITXBUF=iData;
 }
@@ -297,6 +297,7 @@ unsigned short scia_recv(void)
     while(SciaRegs.SCIFFRX.bit.RXFFST !=1)
     {
        // wait for XRDY =1 for empty state
+        WatchDogRefresh();
     }
     // Get character
     lReadChar = SciaRegs.SCIRXBUF.all;

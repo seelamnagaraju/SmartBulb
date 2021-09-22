@@ -283,7 +283,8 @@ extern void EnableInterrupts(void);
 extern void DSP28x_usDelay(Uint32 Count);
 
 #define KickDog ServiceDog     // For compatiblity with previous versions
-extern void ServiceDog(void);
+extern void WatchDogRefresh(void);
+extern void Watchdog_Init(void);
 extern void DisableDog(void);
 
 extern Uint16 CsmUnlock(void);

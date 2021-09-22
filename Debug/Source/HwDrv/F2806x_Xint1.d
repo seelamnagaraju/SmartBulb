@@ -7,6 +7,7 @@ Source/HwDrv/F2806x_Xint1.obj: C:/Users/mamat/SmartBulb/Header/HwDrv/F2806x_XInt
 Source/HwDrv/F2806x_Xint1.obj: C:/Users/mamat/SmartBulb/Header/HwDrv/F2806x_PieCtrl.h
 Source/HwDrv/F2806x_Xint1.obj: C:/Users/mamat/SmartBulb/Header/HwDrv/F2806x_Device.h
 Source/HwDrv/F2806x_Xint1.obj: C:/Users/mamat/SmartBulb/Header/HwDrv/F2806x_Adc.h
+Source/HwDrv/F2806x_Xint1.obj: C:/Users/mamat/SmartBulb/Header/HwDrv/F2806x_Device.h
 Source/HwDrv/F2806x_Xint1.obj: C:/Users/mamat/SmartBulb/Header/HwDrv/F2806x_BootVars.h
 Source/HwDrv/F2806x_Xint1.obj: C:/Users/mamat/SmartBulb/Header/HwDrv/F2806x_Cla.h
 Source/HwDrv/F2806x_Xint1.obj: C:/Users/mamat/SmartBulb/Header/HwDrv/F2806x_Comp.h
@@ -34,6 +35,7 @@ C:/Users/mamat/SmartBulb/Header/HwDrv/F2806x_XIntrupt.h:
 C:/Users/mamat/SmartBulb/Header/HwDrv/F2806x_PieCtrl.h: 
 C:/Users/mamat/SmartBulb/Header/HwDrv/F2806x_Device.h: 
 C:/Users/mamat/SmartBulb/Header/HwDrv/F2806x_Adc.h: 
+C:/Users/mamat/SmartBulb/Header/HwDrv/F2806x_Device.h: 
 C:/Users/mamat/SmartBulb/Header/HwDrv/F2806x_BootVars.h: 
 C:/Users/mamat/SmartBulb/Header/HwDrv/F2806x_Cla.h: 
 C:/Users/mamat/SmartBulb/Header/HwDrv/F2806x_Comp.h: 

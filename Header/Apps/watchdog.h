@@ -18,8 +18,8 @@
 
 /* Function prototypes -------------------------------------------------------*/
 void Watchdog_Init (void);
-unsigned char Watchdog_start (void);
-unsigned char Watchdog_stop (void);
+void WatchDogRefresh(void);
+void DisableDog(void);
 
 /*----------------------------------------------------------------------------*/
 #ifdef __cplusplus

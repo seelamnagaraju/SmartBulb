@@ -7,7 +7,6 @@ SHELL = cmd.exe
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS += \
 ../Source/Apps/SmartBulb.c \
-../Source/Apps/TempMonitor.c \
 ../Source/Apps/adc.c \
 ../Source/Apps/dac.c \
 ../Source/Apps/delay.c \
@@ -23,7 +22,6 @@ C_SRCS += \
 
 C_DEPS += \
 ./Source/Apps/SmartBulb.d \
-./Source/Apps/TempMonitor.d \
 ./Source/Apps/adc.d \
 ./Source/Apps/dac.d \
 ./Source/Apps/delay.d \
@@ -39,7 +37,6 @@ C_DEPS += \
 
 OBJS += \
 ./Source/Apps/SmartBulb.obj \
-./Source/Apps/TempMonitor.obj \
 ./Source/Apps/adc.obj \
 ./Source/Apps/dac.obj \
 ./Source/Apps/delay.obj \
@@ -55,7 +52,6 @@ OBJS += \
 
 OBJS__QUOTED += \
 "Source\Apps\SmartBulb.obj" \
-"Source\Apps\TempMonitor.obj" \
 "Source\Apps\adc.obj" \
 "Source\Apps\dac.obj" \
 "Source\Apps\delay.obj" \
@@ -71,7 +67,6 @@ OBJS__QUOTED += \
 
 C_DEPS__QUOTED += \
 "Source\Apps\SmartBulb.d" \
-"Source\Apps\TempMonitor.d" \
 "Source\Apps\adc.d" \
 "Source\Apps\dac.d" \
 "Source\Apps\delay.d" \
@@ -87,7 +82,6 @@ C_DEPS__QUOTED += \
 
 C_SRCS__QUOTED += \
 "../Source/Apps/SmartBulb.c" \
-"../Source/Apps/TempMonitor.c" \
 "../Source/Apps/adc.c" \
 "../Source/Apps/dac.c" \
 "../Source/Apps/delay.c" \
