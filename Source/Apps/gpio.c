@@ -43,7 +43,12 @@ void LED_Ctrl(LED_TypeDef iLED, eLedState iState)
 		{
 			break;
 		}
-		default :
+		
+	    case 5:   // testing remove it 
+		{
+			break;
+		}
+		default :  
 			break;
 	}
 }
