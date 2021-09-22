@@ -41,7 +41,7 @@ GPIOXINT3SEL 0x6FE2  XINT3 GPIO Input Select Register 	(GPIO0 to 31)
 GPIOLPMSEL 	 0x6FE8  LPM   GPIO Select Register 		(GPIO0 to 31)
 -------------------------------------------------------------------------
 
-//  09222021--local
+//  09232021--local changes done
 
 //---------------@ Enf of File @-------------------------------------//
 
