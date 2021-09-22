@@ -11,9 +11,9 @@
 //!
 //!    Assignment : SMART BULB CTRL PROJECT
 //!
-//!    Date: 07/18/2020
+//!    Date: 07/18/2020 PST
 //!
-//!    Latest Modification: 09/22/2021
+//!    Latest Modification:: D:09/22/2021 T:0815PM 
 //!
 //!    Objective:  Smart bulb controlling system
 //
@@ -104,14 +104,14 @@ interrupt void INT14_ISR(void); // INT14_ISR - INT14 or CPU-Timer2
 /*------------------------------------------------------------*/
 void main(void)
 {
-    int localVar3=0;
+    int localVar=0;
     InitDevice();
     InitApp();
     Variable_Init(); // variable initialization
 
     g_ConfigSel=PROGRAM_SMARTBULB; // PROGRAM_TEST;
 
-    for (localVar3=0; localVar3<1000; localVar3++);
+    for (localVar=0; localVar<1000; localVar++);
 
     while(1)
     {
